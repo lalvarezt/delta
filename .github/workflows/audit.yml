@@ -6,6 +6,7 @@ on:
     - cron: '0 0 * * *'
   push:
     paths:
+      - '.github/workflows/audit.yml'
       - '**/Cargo.toml'
       - '**/Cargo.lock'
       - '**/audit.toml'
@@ -13,6 +14,9 @@ on:
 jobs:
   audit:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
