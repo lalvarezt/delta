@@ -1,0 +1,953 @@
+{
+  "created_at": "2026-11-08T14:54:00.639Z",
+  "platform": "linux 7.2.6-arch2-1 x64",
+  "cpu": "13th Gen Intel(R) Core(TM) i7-1370P",
+  "node": "v26.13.0",
+  "binaries": [
+    "/tmp/stack-perf-round2/delta-before",
+    "/home/lalvarezt/git-repos/delta/target/release/delta"
+  ],
+  "revisions": {
+    "delta": "7219bffd7917b1a221fad355f70aa467a803c6c3",
+    "lazygit": "44945495c9ee9cf39fe190b5a8413a38a5007341"
+  },
+  "binary_sha256": [
+    "e7d2b1553934e2d8aa41e610e99337519148739f75bc2d15513d4593ac0b1bbe",
+    "55b6a8a036f250579f504322592bb96298a23873d5e17bf3b28c492123ab981b"
+  ],
+  "gitconfig": true,
+  "colored": true,
+  "hyperlinks": true,
+  "runs": 5,
+  "warmups": 3,
+  "results": [
+    {
+      "fixture": "empty",
+      "mode": "unified",
+      "input_bytes": 0,
+      "input_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "output_bytes": 10,
+      "args": [
+        "--paging=never",
+        "--width=100",
+        "--true-color=always",
+        "--hyperlinks",
+        "--hyperlinks-file-link-format=lazygit-edit://{path}:{line}"
+      ],
+      "output_identical": true,
+      "before": {
+        "median_ms": 13.932537999999994,
+        "mad_ms": 0.794987999999961,
+        "samples_ms": [
+          11.445359999999994,
+          14.479030999999992,
+          13.932537999999994,
+          14.727525999999955,
+          12.178342999999984
+        ]
+      },
+      "after": {
+        "median_ms": 11.232506999999998,
+        "mad_ms": 0.9405460000000119,
+        "samples_ms": [
+          13.076464000000016,
+          10.291960999999986,
+          11.232506999999998,
+          11.714405999999997,
+          10.142177000000004
+        ]
+      },
+      "change_percent": -19.379319116158133
+    },
+    {
+      "fixture": "empty",
+      "mode": "side-by-side",
+      "input_bytes": 0,
+      "input_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "output_bytes": 10,
+      "args": [
+        "--paging=never",
+        "--width=100",
+        "--true-color=always",
+        "--hyperlinks",
+        "--hyperlinks-file-link-format=lazygit-edit://{path}:{line}",
+        "--side-by-side"
+      ],
+      "output_identical": true,
+      "before": {
+        "median_ms": 11.068194000000062,
+        "mad_ms": 0.41173900000006824,
+        "samples_ms": [
+          10.656454999999994,
+          12.72412300000002,
+          10.903228000000013,
+          11.068194000000062,
+          13.212357999999995
+        ]
+      },
+      "after": {
+        "median_ms": 14.60217799999998,
+        "mad_ms": 0.6959340000000793,
+        "samples_ms": [
+          14.826886000000002,
+          10.901138000000003,
+          11.290121,
+          14.60217799999998,
+          15.29811200000006
+        ]
+      },
+      "change_percent": 31.929183749398483
+    },
+    {
+      "fixture": "empty",
+      "mode": "no-syntax",
+      "input_bytes": 0,
+      "input_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "output_bytes": 10,
+      "args": [
+        "--paging=never",
+        "--width=100",
+        "--true-color=always",
+        "--hyperlinks",
+        "--hyperlinks-file-link-format=lazygit-edit://{path}:{line}",
+        "--syntax-theme=none"
+      ],
+      "output_identical": true,
+      "before": {
+        "median_ms": 11.016295000000014,
+        "mad_ms": 0.9778180000000702,
+        "samples_ms": [
+          12.037510999999995,
+          10.515352000000007,
+          11.016295000000014,
+          12.215058999999997,
+          10.038476999999943
+        ]
+      },
+      "after": {
+        "median_ms": 11.150294999999915,
+        "mad_ms": 0.8017330000000129,
+        "samples_ms": [
+          10.29101300000002,
+          11.952027999999927,
+          13.893009000000006,
+          11.150294999999915,
+          11.058424000000059
+        ]
+      },
+      "change_percent": 1.2163799172035583
+    },
+    {
+      "fixture": "tiny",
+      "mode": "unified",
+      "input_bytes": 179,
+      "input_sha256": "351ff059c4e1bcde225ded91657ae52b7a69659b89033b1ee50d8b772b0814ca",
+      "output_bytes": 1217,
+      "args": [
+        "--paging=never",
+        "--width=100",
+        "--true-color=always",
+        "--hyperlinks",
+        "--hyperlinks-file-link-format=lazygit-edit://{path}:{line}"
+      ],
+      "output_identical": true,
+      "before": {
+        "median_ms": 13.466046000000006,
+        "mad_ms": 0.17206499999997504,
+        "samples_ms": [
+          13.63811099999998,
+          13.466046000000006,
+          12.088480000000004,
+          13.38325199999997,
+          13.88052700000003
+        ]
+      },
+      "after": {
+        "median_ms": 12.253689000000008,
+        "mad_ms": 0.5527529999999388,
+        "samples_ms": [
+          11.220996000000014,
+          12.253689000000008,
+          12.806441999999947,
+          12.18193400000007,
+          15.657250999999974
+        ]
+      },
+      "change_percent": -9.003065933385324
+    },
+    {
+      "fixture": "tiny",
+      "mode": "side-by-side",
+      "input_bytes": 179,
+      "input_sha256": "351ff059c4e1bcde225ded91657ae52b7a69659b89033b1ee50d8b772b0814ca",
+      "output_bytes": 1295,
+      "args": [
+        "--paging=never",
+        "--width=100",
+        "--true-color=always",
+        "--hyperlinks",
+        "--hyperlinks-file-link-format=lazygit-edit://{path}:{line}",
+        "--side-by-side"
+      ],
+      "output_identical": true,
+      "before": {
+        "median_ms": 14.076751999999942,
+        "mad_ms": 0.44266300000003866,
+        "samples_ms": [
+          14.076751999999942,
+          13.398876999999857,
+          14.118929999999864,
+          12.744656999999961,
+          14.51941499999998
+        ]
+      },
+      "after": {
+        "median_ms": 13.223175999999967,
+        "mad_ms": 0.3111149999999725,
+        "samples_ms": [
+          12.602038999999877,
+          13.223175999999967,
+          13.53429099999994,
+          13.00269000000003,
+          14.1385479999999
+        ]
+      },
+      "change_percent": -6.063728337332208
+    },
+    {
+      "fixture": "tiny",
+      "mode": "no-syntax",
+      "input_bytes": 179,
+      "input_sha256": "351ff059c4e1bcde225ded91657ae52b7a69659b89033b1ee50d8b772b0814ca",
+      "output_bytes": 1110,
+      "args": [
+        "--paging=never",
+        "--width=100",
+        "--true-color=always",
+        "--hyperlinks",
+        "--hyperlinks-file-link-format=lazygit-edit://{path}:{line}",
+        "--syntax-theme=none"
+      ],
+      "output_identical": true,
+      "before": {
+        "median_ms": 12.177363999999898,
+        "mad_ms": 1.3080010000001039,
+        "samples_ms": [
+          14.377246000000014,
+          13.485365000000002,
+          11.874656999999843,
+          10.136090999999851,
+          12.177363999999898
+        ]
+      },
+      "after": {
+        "median_ms": 12.207032000000027,
+        "mad_ms": 0.3517190000000028,
+        "samples_ms": [
+          11.855313000000024,
+          12.207032000000027,
+          12.522630000000163,
+          13.857060000000047,
+          10.93161299999997
+        ]
+      },
+      "change_percent": 0.24363236575772884
+    },
+    {
+      "fixture": "unicode",
+      "mode": "unified",
+      "input_bytes": 198,
+      "input_sha256": "1d1a3fda631e75a03aa2b1be677d5c6ee8bdd68c6f6d7f68cf7f4db515de2e41",
+      "output_bytes": 1330,
+      "args": [
+        "--paging=never",
+        "--width=100",
+        "--true-color=always",
+        "--hyperlinks",
+        "--hyperlinks-file-link-format=lazygit-edit://{path}:{line}"
+      ],
+      "output_identical": true,
+      "before": {
+        "median_ms": 13.142687000000024,
+        "mad_ms": 0.3022280000000137,
+        "samples_ms": [
+          13.142687000000024,
+          12.436725999999908,
+          13.409052000000202,
+          13.739644999999882,
+          12.84045900000001
+        ]
+      },
+      "after": {
+        "median_ms": 14.154949999999872,
+        "mad_ms": 1.6997429999998985,
+        "samples_ms": [
+          12.012832000000117,
+          15.13800399999991,
+          14.154949999999872,
+          16.34754299999986,
+          12.455206999999973
+        ]
+      },
+      "change_percent": 7.702100795673261
+    },
+    {
+      "fixture": "unicode",
+      "mode": "side-by-side",
+      "input_bytes": 198,
+      "input_sha256": "1d1a3fda631e75a03aa2b1be677d5c6ee8bdd68c6f6d7f68cf7f4db515de2e41",
+      "output_bytes": 1416,
+      "args": [
+        "--paging=never",
+        "--width=100",
+        "--true-color=always",
+        "--hyperlinks",
+        "--hyperlinks-file-link-format=lazygit-edit://{path}:{line}",
+        "--side-by-side"
+      ],
+      "output_identical": true,
+      "before": {
+        "median_ms": 13.018544999999904,
+        "mad_ms": 0.9443720000001576,
+        "samples_ms": [
+          13.018544999999904,
+          15.787673999999924,
+          12.020496000000094,
+          13.962917000000061,
+          12.867081000000098
+        ]
+      },
+      "after": {
+        "median_ms": 12.78795500000001,
+        "mad_ms": 0.9562889999999697,
+        "samples_ms": [
+          12.24728499999992,
+          14.981958000000077,
+          11.831666000000041,
+          14.455369000000019,
+          12.78795500000001
+        ]
+      },
+      "change_percent": -1.7712424852385111
+    },
+    {
+      "fixture": "unicode",
+      "mode": "no-syntax",
+      "input_bytes": 198,
+      "input_sha256": "1d1a3fda631e75a03aa2b1be677d5c6ee8bdd68c6f6d7f68cf7f4db515de2e41",
+      "output_bytes": 1205,
+      "args": [
+        "--paging=never",
+        "--width=100",
+        "--true-color=always",
+        "--hyperlinks",
+        "--hyperlinks-file-link-format=lazygit-edit://{path}:{line}",
+        "--syntax-theme=none"
+      ],
+      "output_identical": true,
+      "before": {
+        "median_ms": 12.068137000000206,
+        "mad_ms": 0.8996380000003228,
+        "samples_ms": [
+          12.700796999999966,
+          11.168498999999883,
+          10.512698,
+          12.068137000000206,
+          15.070995999999923
+        ]
+      },
+      "after": {
+        "median_ms": 11.19848200000024,
+        "mad_ms": 0.5049279999998362,
+        "samples_ms": [
+          10.693554000000404,
+          12.981142999999975,
+          14.11581299999989,
+          10.861979000000247,
+          11.19848200000024
+        ]
+      },
+      "change_percent": -7.20620755299638
+    },
+    {
+      "fixture": "long-lines",
+      "mode": "unified",
+      "input_bytes": 42381,
+      "input_sha256": "fd305f19db35c22708541c8336fdb11e219af1a6ae42c5c6aa3f7ec79762825f",
+      "output_bytes": 45755,
+      "args": [
+        "--paging=never",
+        "--width=100",
+        "--true-color=always",
+        "--hyperlinks",
+        "--hyperlinks-file-link-format=lazygit-edit://{path}:{line}"
+      ],
+      "output_identical": true,
+      "before": {
+        "median_ms": 113.00332099999969,
+        "mad_ms": 1.9316820000003645,
+        "samples_ms": [
+          112.96685699999989,
+          119.10053900000003,
+          114.93500300000005,
+          109.31662899999992,
+          113.00332099999969
+        ]
+      },
+      "after": {
+        "median_ms": 113.77336800000012,
+        "mad_ms": 2.842885000000024,
+        "samples_ms": [
+          109.64003699999967,
+          117.15513999999985,
+          115.87573999999995,
+          110.9304830000001,
+          113.77336800000012
+        ]
+      },
+      "change_percent": 0.6814374950984359
+    },
+    {
+      "fixture": "long-lines",
+      "mode": "side-by-side",
+      "input_bytes": 42381,
+      "input_sha256": "fd305f19db35c22708541c8336fdb11e219af1a6ae42c5c6aa3f7ec79762825f",
+      "output_bytes": 11187,
+      "args": [
+        "--paging=never",
+        "--width=100",
+        "--true-color=always",
+        "--hyperlinks",
+        "--hyperlinks-file-link-format=lazygit-edit://{path}:{line}",
+        "--side-by-side"
+      ],
+      "output_identical": true,
+      "before": {
+        "median_ms": 113.6492159999998,
+        "mad_ms": 0.965849000000162,
+        "samples_ms": [
+          111.94100499999968,
+          115.30317800000012,
+          112.68336699999963,
+          113.6492159999998,
+          114.14135499999975
+        ]
+      },
+      "after": {
+        "median_ms": 116.71227100000033,
+        "mad_ms": 0.35739899999953195,
+        "samples_ms": [
+          117.06966999999986,
+          116.71227100000033,
+          116.92200699999921,
+          112.47626299999956,
+          112.96418700000049
+        ]
+      },
+      "change_percent": 2.6951835725822715
+    },
+    {
+      "fixture": "long-lines",
+      "mode": "no-syntax",
+      "input_bytes": 42381,
+      "input_sha256": "fd305f19db35c22708541c8336fdb11e219af1a6ae42c5c6aa3f7ec79762825f",
+      "output_bytes": 45507,
+      "args": [
+        "--paging=never",
+        "--width=100",
+        "--true-color=always",
+        "--hyperlinks",
+        "--hyperlinks-file-link-format=lazygit-edit://{path}:{line}",
+        "--syntax-theme=none"
+      ],
+      "output_identical": true,
+      "before": {
+        "median_ms": 115.07120799999939,
+        "mad_ms": 0.413618999999926,
+        "samples_ms": [
+          107.44446299999981,
+          115.48482699999931,
+          110.27708900000016,
+          115.07120799999939,
+          115.19725199999993
+        ]
+      },
+      "after": {
+        "median_ms": 112.42478699999992,
+        "mad_ms": 2.248677999999927,
+        "samples_ms": [
+          112.10890299999937,
+          116.100504,
+          112.42478699999992,
+          114.67346499999985,
+          108.76452399999926
+        ]
+      },
+      "change_percent": -2.299811608825275
+    },
+    {
+      "fixture": "unpaired",
+      "mode": "unified",
+      "input_bytes": 6811,
+      "input_sha256": "549945dc73d1e54618133456c2794546eb945d8692c5bba103b437fd2bf35c51",
+      "output_bytes": 15663,
+      "args": [
+        "--paging=never",
+        "--width=100",
+        "--true-color=always",
+        "--hyperlinks",
+        "--hyperlinks-file-link-format=lazygit-edit://{path}:{line}"
+      ],
+      "output_identical": true,
+      "before": {
+        "median_ms": 17.216732999999294,
+        "mad_ms": 1.4969010000004346,
+        "samples_ms": [
+          19.20484199999919,
+          15.760263000000123,
+          15.71983199999886,
+          17.216732999999294,
+          19.19399499999963
+        ]
+      },
+      "after": {
+        "median_ms": 18.309461999999257,
+        "mad_ms": 1.2018449999995937,
+        "samples_ms": [
+          20.22955600000023,
+          20.253145000000586,
+          17.724427999999534,
+          17.107616999999664,
+          18.309461999999257
+        ]
+      },
+      "change_percent": 6.346901006131689
+    },
+    {
+      "fixture": "unpaired",
+      "mode": "side-by-side",
+      "input_bytes": 6811,
+      "input_sha256": "549945dc73d1e54618133456c2794546eb945d8692c5bba103b437fd2bf35c51",
+      "output_bytes": 32812,
+      "args": [
+        "--paging=never",
+        "--width=100",
+        "--true-color=always",
+        "--hyperlinks",
+        "--hyperlinks-file-link-format=lazygit-edit://{path}:{line}",
+        "--side-by-side"
+      ],
+      "output_identical": true,
+      "before": {
+        "median_ms": 17.959011999999348,
+        "mad_ms": 0.18995600000016566,
+        "samples_ms": [
+          19.13520299999982,
+          19.751345999999103,
+          17.769055999999182,
+          17.859706999999617,
+          17.959011999999348
+        ]
+      },
+      "after": {
+        "median_ms": 19.45287300000018,
+        "mad_ms": 1.0979819999993197,
+        "samples_ms": [
+          19.45287300000018,
+          19.680631999999605,
+          20.5508549999995,
+          16.420077999999194,
+          16.904866000000766
+        ]
+      },
+      "change_percent": 8.318169173231183
+    },
+    {
+      "fixture": "unpaired",
+      "mode": "no-syntax",
+      "input_bytes": 6811,
+      "input_sha256": "549945dc73d1e54618133456c2794546eb945d8692c5bba103b437fd2bf35c51",
+      "output_bytes": 15338,
+      "args": [
+        "--paging=never",
+        "--width=100",
+        "--true-color=always",
+        "--hyperlinks",
+        "--hyperlinks-file-link-format=lazygit-edit://{path}:{line}",
+        "--syntax-theme=none"
+      ],
+      "output_identical": true,
+      "before": {
+        "median_ms": 17.89439400000083,
+        "mad_ms": 0.800387999997838,
+        "samples_ms": [
+          18.694781999998668,
+          19.936059999999998,
+          17.101497999999992,
+          16.662145000000237,
+          17.89439400000083
+        ]
+      },
+      "after": {
+        "median_ms": 17.80457899999965,
+        "mad_ms": 1.215093999999226,
+        "samples_ms": [
+          19.234504000000015,
+          19.019672999998875,
+          15.51491200000055,
+          17.569682999999714,
+          17.80457899999965
+        ]
+      },
+      "change_percent": -0.5019169690863912
+    },
+    {
+      "fixture": "rust-history",
+      "mode": "unified",
+      "input_bytes": 943847,
+      "input_sha256": "03c539576bb84418e364a6d264b35c3efacc6b2efecc8ecdbc9337689ee1c2df",
+      "output_bytes": 5689610,
+      "args": [
+        "--paging=never",
+        "--width=100",
+        "--true-color=always",
+        "--hyperlinks",
+        "--hyperlinks-file-link-format=lazygit-edit://{path}:{line}"
+      ],
+      "output_identical": true,
+      "before": {
+        "median_ms": 322.8134260000006,
+        "mad_ms": 3.585038999999597,
+        "samples_ms": [
+          322.8134260000006,
+          327.96644600000036,
+          318.85069999999905,
+          321.29685100000097,
+          326.3984650000002
+        ]
+      },
+      "after": {
+        "median_ms": 308.92389300000104,
+        "mad_ms": 2.015348000000813,
+        "samples_ms": [
+          308.92389300000104,
+          315.3176349999994,
+          316.1689729999998,
+          306.90854500000023,
+          307.34694599999966
+        ]
+      },
+      "change_percent": -4.302650348873516
+    },
+    {
+      "fixture": "rust-history",
+      "mode": "side-by-side",
+      "input_bytes": 943847,
+      "input_sha256": "03c539576bb84418e364a6d264b35c3efacc6b2efecc8ecdbc9337689ee1c2df",
+      "output_bytes": 8091340,
+      "args": [
+        "--paging=never",
+        "--width=100",
+        "--true-color=always",
+        "--hyperlinks",
+        "--hyperlinks-file-link-format=lazygit-edit://{path}:{line}",
+        "--side-by-side"
+      ],
+      "output_identical": true,
+      "before": {
+        "median_ms": 410.18762100000095,
+        "mad_ms": 1.334487000000081,
+        "samples_ms": [
+          410.18762100000095,
+          432.59173999999985,
+          408.85313400000086,
+          409.1388729999999,
+          414.9603810000008
+        ]
+      },
+      "after": {
+        "median_ms": 408.1345820000024,
+        "mad_ms": 0.6121890000031271,
+        "samples_ms": [
+          409.12446199999977,
+          407.8446120000008,
+          408.1345820000024,
+          409.532310999999,
+          407.5223929999993
+        ]
+      },
+      "change_percent": -0.5005121790349065
+    },
+    {
+      "fixture": "rust-history",
+      "mode": "no-syntax",
+      "input_bytes": 943847,
+      "input_sha256": "03c539576bb84418e364a6d264b35c3efacc6b2efecc8ecdbc9337689ee1c2df",
+      "output_bytes": 4751536,
+      "args": [
+        "--paging=never",
+        "--width=100",
+        "--true-color=always",
+        "--hyperlinks",
+        "--hyperlinks-file-link-format=lazygit-edit://{path}:{line}",
+        "--syntax-theme=none"
+      ],
+      "output_identical": true,
+      "before": {
+        "median_ms": 82.41228099999717,
+        "mad_ms": 0.6729939999968337,
+        "samples_ms": [
+          82.41228099999717,
+          82.89055799999915,
+          81.73928700000033,
+          81.4919979999977,
+          86.1504789999999
+        ]
+      },
+      "after": {
+        "median_ms": 74.97060899999997,
+        "mad_ms": 0.8712670000022626,
+        "samples_ms": [
+          75.82408099999884,
+          74.0993419999977,
+          79.11355700000058,
+          73.2735569999968,
+          74.97060899999997
+        ]
+      },
+      "change_percent": -9.02980952559419
+    },
+    {
+      "fixture": "go-small",
+      "mode": "unified",
+      "input_bytes": 6012,
+      "input_sha256": "2af56ea593c1551eb57062b547defbf578a3626fd4075f5e2b1511262c127ab5",
+      "output_bytes": 51082,
+      "args": [
+        "--paging=never",
+        "--width=100",
+        "--true-color=always",
+        "--hyperlinks",
+        "--hyperlinks-file-link-format=lazygit-edit://{path}:{line}"
+      ],
+      "output_identical": true,
+      "before": {
+        "median_ms": 16.560733000002074,
+        "mad_ms": 1.1150920000000042,
+        "samples_ms": [
+          15.566408999999112,
+          15.44564100000207,
+          16.560733000002074,
+          18.955480000000534,
+          19.61865300000136
+        ]
+      },
+      "after": {
+        "median_ms": 16.669129999998404,
+        "mad_ms": 0.9101440000013099,
+        "samples_ms": [
+          16.669129999998404,
+          14.683114000003116,
+          15.909374000002572,
+          17.579273999999714,
+          18.901676000001316
+        ]
+      },
+      "change_percent": 0.6545422838247328
+    },
+    {
+      "fixture": "go-small",
+      "mode": "side-by-side",
+      "input_bytes": 6012,
+      "input_sha256": "2af56ea593c1551eb57062b547defbf578a3626fd4075f5e2b1511262c127ab5",
+      "output_bytes": 72271,
+      "args": [
+        "--paging=never",
+        "--width=100",
+        "--true-color=always",
+        "--hyperlinks",
+        "--hyperlinks-file-link-format=lazygit-edit://{path}:{line}",
+        "--side-by-side"
+      ],
+      "output_identical": true,
+      "before": {
+        "median_ms": 16.41079600000012,
+        "mad_ms": 0.4507960000009916,
+        "samples_ms": [
+          16.341035000001284,
+          16.86159200000111,
+          16.41079600000012,
+          17.601692000000185,
+          15.832392000000254
+        ]
+      },
+      "after": {
+        "median_ms": 16.805566999999428,
+        "mad_ms": 0.9069600000002538,
+        "samples_ms": [
+          17.920129999998608,
+          16.805566999999428,
+          18.507463000001735,
+          15.898606999999174,
+          16.334296000000904
+        ]
+      },
+      "change_percent": 2.4055566835350817
+    },
+    {
+      "fixture": "go-small",
+      "mode": "no-syntax",
+      "input_bytes": 6012,
+      "input_sha256": "2af56ea593c1551eb57062b547defbf578a3626fd4075f5e2b1511262c127ab5",
+      "output_bytes": 34703,
+      "args": [
+        "--paging=never",
+        "--width=100",
+        "--true-color=always",
+        "--hyperlinks",
+        "--hyperlinks-file-link-format=lazygit-edit://{path}:{line}",
+        "--syntax-theme=none"
+      ],
+      "output_identical": true,
+      "before": {
+        "median_ms": 13.749558999999863,
+        "mad_ms": 2.0591239999994286,
+        "samples_ms": [
+          15.930591000000277,
+          15.636578000001464,
+          11.536646000000474,
+          13.749558999999863,
+          11.690435000000434
+        ]
+      },
+      "after": {
+        "median_ms": 13.072035999997752,
+        "mad_ms": 1.8747029999976803,
+        "samples_ms": [
+          10.933230999999068,
+          13.072035999997752,
+          14.736245000000054,
+          15.868254000000888,
+          11.197333000000071
+        ]
+      },
+      "change_percent": -4.9275980415234955
+    },
+    {
+      "fixture": "go-history",
+      "mode": "unified",
+      "input_bytes": 1830300,
+      "input_sha256": "a03c35101f7725a7f72a74a3ba9a627130ed0e803a9072ae8971f0971289038a",
+      "output_bytes": 12230115,
+      "args": [
+        "--paging=never",
+        "--width=100",
+        "--true-color=always",
+        "--hyperlinks",
+        "--hyperlinks-file-link-format=lazygit-edit://{path}:{line}"
+      ],
+      "output_identical": true,
+      "before": {
+        "median_ms": 411.79953100000057,
+        "mad_ms": 1.8323720000007597,
+        "samples_ms": [
+          412.97724200000084,
+          411.79953100000057,
+          413.63190300000133,
+          403.75880499999766,
+          406.7210479999994
+        ]
+      },
+      "after": {
+        "median_ms": 387.5089680000019,
+        "mad_ms": 0.7173010000005888,
+        "samples_ms": [
+          388.7481880000014,
+          387.5089680000019,
+          388.03111100000024,
+          386.7916670000013,
+          380.5707719999991
+        ]
+      },
+      "change_percent": -5.8986378495896385
+    },
+    {
+      "fixture": "go-history",
+      "mode": "side-by-side",
+      "input_bytes": 1830300,
+      "input_sha256": "a03c35101f7725a7f72a74a3ba9a627130ed0e803a9072ae8971f0971289038a",
+      "output_bytes": 17427136,
+      "args": [
+        "--paging=never",
+        "--width=100",
+        "--true-color=always",
+        "--hyperlinks",
+        "--hyperlinks-file-link-format=lazygit-edit://{path}:{line}",
+        "--side-by-side"
+      ],
+      "output_identical": true,
+      "before": {
+        "median_ms": 595.9857649999976,
+        "mad_ms": 6.050125999994634,
+        "samples_ms": [
+          595.9857649999976,
+          589.935639000003,
+          609.9668499999971,
+          594.2914870000022,
+          606.8784800000067
+        ]
+      },
+      "after": {
+        "median_ms": 598.9198669999969,
+        "mad_ms": 10.225469999997586,
+        "samples_ms": [
+          598.9198669999969,
+          594.1385530000043,
+          620.8781110000054,
+          611.4679570000008,
+          588.6943969999993
+        ]
+      },
+      "change_percent": 0.49231075175080186
+    },
+    {
+      "fixture": "go-history",
+      "mode": "no-syntax",
+      "input_bytes": 1830300,
+      "input_sha256": "a03c35101f7725a7f72a74a3ba9a627130ed0e803a9072ae8971f0971289038a",
+      "output_bytes": 9574316,
+      "args": [
+        "--paging=never",
+        "--width=100",
+        "--true-color=always",
+        "--hyperlinks",
+        "--hyperlinks-file-link-format=lazygit-edit://{path}:{line}",
+        "--syntax-theme=none"
+      ],
+      "output_identical": true,
+      "before": {
+        "median_ms": 144.15265499999805,
+        "mad_ms": 3.8785599999973783,
+        "samples_ms": [
+          144.15265499999805,
+          144.99498500000482,
+          148.55607100000634,
+          140.27409500000067,
+          138.9356889999981
+        ]
+      },
+      "after": {
+        "median_ms": 135.4153809999989,
+        "mad_ms": 2.760836000001291,
+        "samples_ms": [
+          135.4153809999989,
+          141.53562500000407,
+          133.8673970000018,
+          138.17621700000018,
+          131.9595929999996
+        ]
+      },
+      "change_percent": -6.061125963999259
+    }
+  ]
+}

@@ -394,6 +394,41 @@ timings and sampled functions. Additional theme changes are not justified by
 this profile. The larger opportunity is avoiding repeated source parsing while
 preserving multiline state, cancellation, and configuration invalidation.
 
+## Release optimization after the Neovim UI profile
+
+The 120×40 UI profile in the chezmoi repository found that opening search in a
+fresh large diff waited for complete output, even though the first visible body
+arrived in about 35 ms. Work is coordinated with lazygit's incremental search
+and SGR ingestion changes. Search prompt latency and renderer completion are
+separate measurements.
+
+Release builds now use thin LTO and one code-generation unit. Nine alternating
+configured comparisons preserved exact output and measured Go-history unified
+rendering at 421.77 ms before and 392.63 ms after. Rust history changed from
+322.64 ms to 312.87 ms. The subsequent full 24-case matrix also preserved bytes,
+including OSC 1717 records and editor hyperlinks. Its five-sample history
+medians were 411.80 to 387.51 ms for Go unified, and 322.81 to 308.92 ms for Rust
+unified. Side-by-side history was essentially unchanged. Tiny cases varied by
+milliseconds in both directions, so this is not a universal startup speedup.
+
+This trades compilation time for installed runtime performance. The initial
+optimized experiment rebuilt dependencies and finished in 33 seconds on this
+machine. A later install compiled the executable in about 27 seconds. These
+are observed warm-cache build times, not a clean-build comparison. Normal
+debug and test profiles retain their settings. No output or parser behavior
+changes as part of this build setting.
+
+A bounded, full-parser-state-checked cache of stable line transitions was also
+tested and rejected. On the real configured Go history it changed the median
+from 418.93 ms to 428.63 ms; Rust history was essentially unchanged. Synthetic
+repetition is insufficient justification for that cache. It was removed before
+committing. Any future parser reuse must earn its cost on actual histories and
+retain multiline and injected-language state.
+
+The evidence is in [release optimization](data/stack-release-optimization.json)
+and [the configured matrix](data/stack-release-matrix.json). `just check` passes
+with 485 tests and 8 ignored, retaining the four documented Clippy warnings.
+
 ## Installed fork
 
 On 2026-11-08, `just install` built and installed this checkout using

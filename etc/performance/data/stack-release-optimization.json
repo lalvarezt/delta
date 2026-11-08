@@ -1,0 +1,163 @@
+{
+  "created_at": "2026-11-08T14:48:30.046Z",
+  "platform": "linux 7.2.6-arch2-1 x64",
+  "cpu": "13th Gen Intel(R) Core(TM) i7-1370P",
+  "node": "v26.13.0",
+  "binaries": [
+    "/tmp/stack-perf-round2/delta-before",
+    "/home/lalvarezt/git-repos/delta/target/release/delta"
+  ],
+  "revisions": {
+    "delta": "7219bffd7917b1a221fad355f70aa467a803c6c3",
+    "lazygit": "b077f37c138b694b1233d13e524bcaf880a46d7c"
+  },
+  "binary_sha256": [
+    "e7d2b1553934e2d8aa41e610e99337519148739f75bc2d15513d4593ac0b1bbe",
+    "55b6a8a036f250579f504322592bb96298a23873d5e17bf3b28c492123ab981b"
+  ],
+  "gitconfig": true,
+  "colored": true,
+  "hyperlinks": true,
+  "runs": 9,
+  "warmups": 3,
+  "results": [
+    {
+      "fixture": "tiny",
+      "mode": "unified",
+      "input_bytes": 179,
+      "input_sha256": "351ff059c4e1bcde225ded91657ae52b7a69659b89033b1ee50d8b772b0814ca",
+      "output_bytes": 1217,
+      "args": [
+        "--paging=never",
+        "--width=100",
+        "--true-color=always",
+        "--hyperlinks",
+        "--hyperlinks-file-link-format=lazygit-edit://{path}:{line}"
+      ],
+      "output_identical": true,
+      "before": {
+        "median_ms": 14.934567000000015,
+        "mad_ms": 1.8728320000000167,
+        "samples_ms": [
+          15.115158000000008,
+          14.442152000000021,
+          13.061734999999999,
+          11.988910999999973,
+          17.84399400000001,
+          14.934567000000015,
+          13.137914000000023,
+          17.330405999999982,
+          17.02847700000001
+        ]
+      },
+      "after": {
+        "median_ms": 13.349467000000004,
+        "mad_ms": 0.4251029999999787,
+        "samples_ms": [
+          12.571167000000003,
+          13.467770000000002,
+          14.464268000000004,
+          12.28054000000003,
+          12.800915000000032,
+          12.994635000000017,
+          13.492636000000005,
+          13.774569999999983,
+          13.349467000000004
+        ]
+      },
+      "change_percent": -10.61363211936449
+    },
+    {
+      "fixture": "rust-history",
+      "mode": "unified",
+      "input_bytes": 943847,
+      "input_sha256": "03c539576bb84418e364a6d264b35c3efacc6b2efecc8ecdbc9337689ee1c2df",
+      "output_bytes": 5689610,
+      "args": [
+        "--paging=never",
+        "--width=100",
+        "--true-color=always",
+        "--hyperlinks",
+        "--hyperlinks-file-link-format=lazygit-edit://{path}:{line}"
+      ],
+      "output_identical": true,
+      "before": {
+        "median_ms": 322.6436219999996,
+        "mad_ms": 5.390870000000177,
+        "samples_ms": [
+          344.4144550000001,
+          317.4745819999998,
+          321.12561299999925,
+          328.59423100000004,
+          329.14107200000035,
+          317.2527519999994,
+          322.77108099999987,
+          315.7522369999997,
+          322.6436219999996
+        ]
+      },
+      "after": {
+        "median_ms": 312.86822500000017,
+        "mad_ms": 3.1929530000006707,
+        "samples_ms": [
+          315.8157409999999,
+          314.167062,
+          302.63253799999984,
+          313.1132340000004,
+          316.54044799999974,
+          312.86822500000017,
+          306.42221299999983,
+          309.6752719999995,
+          307.7603029999991
+        ]
+      },
+      "change_percent": -3.0297815711972875
+    },
+    {
+      "fixture": "go-history",
+      "mode": "unified",
+      "input_bytes": 1886941,
+      "input_sha256": "08ae15820ecc3ffc99fbcda190703d130edc6e7cb41339ed27bb4a29efeda394",
+      "output_bytes": 12677262,
+      "args": [
+        "--paging=never",
+        "--width=100",
+        "--true-color=always",
+        "--hyperlinks",
+        "--hyperlinks-file-link-format=lazygit-edit://{path}:{line}"
+      ],
+      "output_identical": true,
+      "before": {
+        "median_ms": 421.7738550000031,
+        "mad_ms": 2.5148520000038843,
+        "samples_ms": [
+          418.1319769999991,
+          419.2590029999992,
+          423.84098000000085,
+          426.32623199999944,
+          418.1462420000007,
+          421.7738550000031,
+          410.6375810000027,
+          423.57698699999673,
+          422.30646200000047
+        ]
+      },
+      "after": {
+        "median_ms": 392.62898099999984,
+        "mad_ms": 1.7186940000010509,
+        "samples_ms": [
+          392.33821400000124,
+          391.64764300000024,
+          395.8396580000008,
+          386.6059690000002,
+          392.62898099999984,
+          393.6807370000006,
+          397.1203970000024,
+          394.3476750000009,
+          384.8893710000011
+        ]
+      },
+      "change_percent": -6.910071275044549
+    }
+  ]
+}
