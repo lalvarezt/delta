@@ -941,53 +941,6 @@ mod superimpose_style_sections {
         true_color: bool,
         null_syntect_style: SyntectStyle,
     ) -> Vec<(Style, String)> {
-        coalesce(
-            superimpose(
-                explode(syntax_style_sections)
-                    .iter()
-                    .zip(explode(diff_style_sections))
-                    .collect::<Vec<(&(SyntectStyle, char), (Style, char))>>(),
-            ),
-            true_color,
-            null_syntect_style,
-        )
-    }
-
-    fn explode<T>(style_sections: &[(T, &str)]) -> Vec<(T, char)>
-    where
-        T: Copy,
-    {
-        let mut exploded: Vec<(T, char)> = Vec::new();
-        for (style, s) in style_sections {
-            for c in s.chars() {
-                exploded.push((*style, c));
-            }
-        }
-        exploded
-    }
-
-    #[allow(clippy::type_complexity)]
-    fn superimpose(
-        style_section_pairs: Vec<(&(SyntectStyle, char), (Style, char))>,
-    ) -> Vec<((SyntectStyle, Style), char)> {
-        let mut superimposed: Vec<((SyntectStyle, Style), char)> = Vec::new();
-        for ((syntax_style, char_1), (style, char_2)) in style_section_pairs {
-            if *char_1 != char_2 {
-                panic!(
-                    "String mismatch encountered while superimposing style sections: '{}' vs '{}'",
-                    *char_1, char_2
-                )
-            }
-            superimposed.push(((*syntax_style, style), *char_1));
-        }
-        superimposed
-    }
-
-    fn coalesce(
-        style_sections: Vec<((SyntectStyle, Style), char)>,
-        true_color: bool,
-        null_syntect_style: SyntectStyle,
-    ) -> Vec<(Style, String)> {
         let make_superimposed_style = |(syntect_style, style): (SyntectStyle, Style)| {
             if style.is_syntax_highlighted && syntect_style != null_syntect_style {
                 Style {
@@ -1002,28 +955,53 @@ mod superimpose_style_sections {
             }
         };
         let mut coalesced: Vec<(Style, String)> = Vec::new();
-        let mut style_sections = style_sections.iter();
-        if let Some((style_pair, c)) = style_sections.next() {
-            let mut current_string = c.to_string();
-            let mut current_style_pair = style_pair;
-            for (style_pair, c) in style_sections {
-                if style_pair != current_style_pair {
-                    let style = make_superimposed_style(*current_style_pair);
-                    coalesced.push((style, current_string));
-                    current_string = String::new();
-                    current_style_pair = style_pair;
-                }
-                current_string.push(*c);
+        let mut syntax_sections = syntax_style_sections
+            .iter()
+            .copied()
+            .filter(|(_, s)| !s.is_empty());
+        let mut diff_sections = diff_style_sections
+            .iter()
+            .copied()
+            .filter(|(_, s)| !s.is_empty());
+        let mut syntax = syntax_sections.next();
+        let mut diff = diff_sections.next();
+        let mut previous_style_pair = None;
+        while let (Some((syntax_style, syntax_text)), Some((diff_style, diff_text))) =
+            (syntax, diff)
+        {
+            // Both streams annotate the same text, so either section's end is a
+            // UTF-8 boundary in both. Consume the overlap without expanding it
+            // into individual characters.
+            let len = syntax_text.len().min(diff_text.len());
+            let text = &syntax_text[..len];
+            assert_eq!(
+                text,
+                &diff_text[..len],
+                "String mismatch encountered while superimposing style sections"
+            );
+            let pair = (syntax_style, diff_style);
+            if previous_style_pair == Some(pair) {
+                coalesced.last_mut().unwrap().1.push_str(text);
+            } else {
+                coalesced.push((make_superimposed_style(pair), text.to_owned()));
+                previous_style_pair = Some(pair);
             }
-
-            // TODO: This is not the ideal location for the following code.
-            if current_string.ends_with('\n') {
-                // Remove the terminating newline whose presence was necessary for the syntax
-                // highlighter to work correctly.
-                current_string.truncate(current_string.len() - 1);
+            syntax = if len == syntax_text.len() {
+                syntax_sections.next()
+            } else {
+                Some((syntax_style, &syntax_text[len..]))
+            };
+            diff = if len == diff_text.len() {
+                diff_sections.next()
+            } else {
+                Some((diff_style, &diff_text[len..]))
+            };
+        }
+        if let Some((_, text)) = coalesced.last_mut() {
+            if text.ends_with('\n') {
+                // The syntax highlighter requires a terminating newline.
+                text.pop();
             }
-            let style = make_superimposed_style(*current_style_pair);
-            coalesced.push((style, current_string));
         }
         coalesced
     }
@@ -1130,21 +1108,85 @@ mod superimpose_style_sections {
         }
 
         #[test]
-        fn test_explode() {
-            let arbitrary = 0;
+        fn test_superimpose_unicode_and_empty_sections() {
+            let syntax = [
+                (*SYNTAX_STYLE, ""),
+                (*SYNTAX_STYLE, "aé👩"),
+                (*SYNTAX_STYLE, "‍💻中\n"),
+            ];
+            let diff = [
+                (*SYNTAX_HIGHLIGHTED_STYLE, "a"),
+                (*SYNTAX_HIGHLIGHTED_STYLE, ""),
+                (*SYNTAX_HIGHLIGHTED_STYLE, "é👩‍💻"),
+                (*NON_SYNTAX_HIGHLIGHTED_STYLE, "中\n"),
+            ];
             assert_eq!(
-                explode(&[(arbitrary, "ab")]),
-                vec![(arbitrary, 'a'), (arbitrary, 'b')]
-            )
+                superimpose_style_sections(&syntax, &diff, true, SyntectStyle::default()),
+                vec![
+                    (*SUPERIMPOSED_STYLE, "aé👩‍💻".into()),
+                    (*NON_SYNTAX_HIGHLIGHTED_STYLE, "中".into())
+                ]
+            );
         }
 
         #[test]
-        fn test_superimpose() {
-            let x = (*SYNTAX_STYLE, 'a');
-            let pairs = vec![(&x, (*SYNTAX_HIGHLIGHTED_STYLE, 'a'))];
+        fn test_superimpose_preserves_style_pairs_and_final_newline_section() {
+            let other_syntax = SyntectStyle {
+                foreground: SyntectColor::WHITE,
+                ..*SYNTAX_STYLE
+            };
+            let white_syntax_style = Style {
+                ansi_term_style: ansi_term::Style {
+                    foreground: Some(Color::RGB(255, 255, 255)),
+                    ..SYNTAX_HIGHLIGHTED_STYLE.ansi_term_style
+                },
+                ..*SYNTAX_HIGHLIGHTED_STYLE
+            };
+            let syntax = [(*SYNTAX_STYLE, "é"), (other_syntax, "中\n")];
+            let diff = [
+                (*NON_SYNTAX_HIGHLIGHTED_STYLE, "é中"),
+                (*SYNTAX_HIGHLIGHTED_STYLE, "\n"),
+            ];
             assert_eq!(
-                superimpose(pairs),
-                vec![((*SYNTAX_STYLE, *SYNTAX_HIGHLIGHTED_STYLE), 'a')]
+                superimpose_style_sections(&syntax, &diff, true, SyntectStyle::default()),
+                vec![
+                    (*NON_SYNTAX_HIGHLIGHTED_STYLE, "é".into()),
+                    (*NON_SYNTAX_HIGHLIGHTED_STYLE, "中".into()),
+                    (white_syntax_style, String::new())
+                ]
+            );
+        }
+
+        #[test]
+        fn test_superimpose_null_syntax_and_empty_input() {
+            for true_color in [false, true] {
+                assert_eq!(
+                    superimpose_style_sections(
+                        &[(*SYNTAX_STYLE, "é\n")],
+                        &[(*SYNTAX_HIGHLIGHTED_STYLE, "é\n")],
+                        true_color,
+                        *SYNTAX_STYLE
+                    ),
+                    vec![(*SYNTAX_HIGHLIGHTED_STYLE, "é".into())]
+                );
+                assert!(superimpose_style_sections(
+                    &[],
+                    &[(*SYNTAX_HIGHLIGHTED_STYLE, "")],
+                    true_color,
+                    *SYNTAX_STYLE
+                )
+                .is_empty());
+            }
+        }
+
+        #[test]
+        #[should_panic(expected = "String mismatch encountered while superimposing style sections")]
+        fn test_superimpose_rejects_different_text() {
+            superimpose_style_sections(
+                &[(*SYNTAX_STYLE, "abc")],
+                &[(*SYNTAX_HIGHLIGHTED_STYLE, "abd")],
+                true,
+                SyntectStyle::default(),
             );
         }
     }
