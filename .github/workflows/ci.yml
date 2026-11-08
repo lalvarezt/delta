@@ -27,7 +27,8 @@ jobs:
           - os: ubuntu-latest
             target: x86_64-unknown-linux-musl
             use-cross: true
-          - os: ubuntu-latest
+          # Ubuntu 26.04 cannot launch subprocesses from these 32-bit tests.
+          - os: ubuntu-24.04
             target: i686-unknown-linux-gnu
             use-cross: true
           - os: ubuntu-latest
@@ -50,10 +51,6 @@ jobs:
           tool: cross
       - name: Unit tests
         shell: bash
-        env:
-          # Avoid spawning cargo metadata from cross-compiled snapshot tests.
-          INSTA_WORKSPACE_ROOT: .
-          CROSS_BUILD_ENV_PASSTHROUGH: INSTA_WORKSPACE_ROOT
         run: |
           if [[ "${{ matrix.job.use-cross }}" == "true" ]]; then
             cross test --target ${{ matrix.job.target }} --verbose -- --nocapture
