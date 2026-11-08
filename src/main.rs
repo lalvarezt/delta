@@ -12,6 +12,7 @@ mod format;
 mod git_config;
 mod handlers;
 mod highlight;
+mod lazygit;
 mod minusplus;
 mod options;
 mod paint;
@@ -143,6 +144,7 @@ pub fn run_app(
         subcommands::show_config::show_config(opt, &mut stdout)?;
         return Ok(0);
     }
+    let lazygit_compat = opt.lazygit_compat;
     let config = config::Config::from(opt);
 
     // The following block structure is because of `writer` and related lifetimes:
@@ -172,6 +174,11 @@ pub fn run_app(
         Call::Help(_) | Call::Version(_) => delta_unreachable("help/version handled earlier"),
     };
 
+    if lazygit_compat && !subcmd.is_none() {
+        eprintln!("--lazygit-compat requires input on stdin");
+        return Ok(config.error_exit_code);
+    }
+
     if subcmd.is_none() {
         // Default delta run: read input from stdin, write to stdout or pager (pager started already^).
 
@@ -185,7 +192,11 @@ pub fn run_app(
             return Ok(config.error_exit_code);
         }
 
-        let res = delta(io::stdin().lock().byte_lines(), &mut writer, &config);
+        let res = if lazygit_compat {
+            lazygit::render(io::stdin().lock(), &mut writer, &config)
+        } else {
+            delta(io::stdin().lock().byte_lines(), &mut writer, &config)
+        };
 
         if let Err(error) = res {
             match error.kind() {

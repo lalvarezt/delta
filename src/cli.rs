@@ -34,6 +34,10 @@ const TERM_FALLBACK_WIDTH: usize = 79;
     max_term_width = usize::MAX,
 )]
 pub struct Opt {
+    #[arg(long = "lazygit-compat")]
+    /// Apply the personal lazygit statistics, tab markers, and graph colors to stdin.
+    pub lazygit_compat: bool,
+
     #[arg(long = "blame-code-style", value_name = "STYLE")]
     /// Style string for the code section of a git blame line.
     ///
@@ -1396,10 +1400,11 @@ impl Opt {
 }
 
 // Option names to exclude when listing options to process for various purposes. These are all
-// pseudo-flag commands such as --list-languages
+// pseudo-flag commands such as --list-languages and CLI-only integration modes.
 lazy_static! {
     static ref IGNORED_OPTION_NAMES: HashSet<&'static str> = vec![
         "generate-completion",
+        "lazygit-compat",
         "list-languages",
         "list-syntax-themes",
         "show-config",

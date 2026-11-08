@@ -308,6 +308,67 @@ on the baseline. Terminal-buffer last-update time was rejected as a completion
 metric because unrelated refreshes contribute updates. Process completion and
 first visible body are recorded as separate boundaries.
 
+## Native lazygit compatibility mode
+
+`--lazygit-compat` moves the personal wrapper's input and output transformations
+into delta. The mode reads stdin, detects existing statistics after stripping
+SGR colors, generates missing statistics with `git apply --stat`, replaces tabs
+with `├──┤`, and colors the final diffstat graphs. It is a CLI-only adapter,
+not a Git-config option. Ordinary delta invocations keep their behavior.
+
+The mode preserves the existing EOF barrier for statistics: it must know whether
+the input already contains a summary before generating one. This change does
+not claim streaming input or a persistent renderer. It removes temporary files,
+the shell pipeline, and its cat/sed/awk helper processes. Git is the only child
+needed when statistics are missing. A scoped writer thread supplies Git's stdin
+while its output is drained, so large input and output cannot deadlock on pipe
+capacity. The final graph writer handles arbitrary write boundaries and retains
+row metadata, editor hyperlinks, and the wrapper's final-newline behavior.
+
+Thirty-four exact-byte comparisons cover the configured source fixtures,
+side-by-side output, negotiated metadata on and off, binary patches, symlinks,
+filenames with spaces and Unicode, invalid UTF-8, CRLF, and missing final
+newlines. Rust tests cover statistics, colored summary detection, and every
+write chunk size of a metadata/link/graph fixture. Full validation passes with
+485 tests and 8 ignored, retaining the four documented baseline Clippy warnings.
+
+Nine paired process measurements through the complete pipeline gave these
+median completion times:
+
+| Input | Original fork and wrapper | Scope cache and wrapper | Scope cache and native mode |
+| --- | ---: | ---: | ---: |
+| 30-line Go change | 24.41 ms | 22.40 ms | 18.44 ms |
+| 1,000-line Go change | 118.42 ms | 96.10 ms | 89.94 ms |
+| 12,000-line Go change | 1,205.45 ms | 940.42 ms | 934.06 ms |
+| 50-commit Go history | 1,002.56 ms | 560.17 ms | 531.40 ms |
+
+Go-history first output fell from 39.73 ms to 23.30 ms. These are pipe timings
+with an 80-column preview width and the personal Catppuccin settings. They are
+not physical key-to-pixel timings. See
+[the complete-stack data](data/stack-native-compat.json) and
+[the compatibility evidence](data/stack-native-parity.json).
+
+Install this fork before changing the chezmoi wrapper to pass the new flag.
+Stock delta does not implement the adapter. The wrapper can then use `exec`
+and preserve the renderer's failure status directly.
+
+The final installed wrapper passes its seven regression checks. Real 120×40
+Neovim checks confirm original source tabs survive line copying, no tab-marker
+glyphs or ANSI escapes enter copied text, and editing a selected row opens the
+original file at its line in the existing editor. Copy uses a test-only file
+clipboard. Single-file staging, unstaging, rapid navigation, and return to
+Neovim also pass. First visible diff-body text improves from about 53 ms to
+32 ms for the large source change, and from 28 ms to 22 ms for the medium one.
+
+The native adapter buffers input in RAM rather than temporary files. Three
+2 ms `/proc` sampling runs on the 12,000-line Go fixture observed delta process
+high-water RSS of 18,856 to 18,944 KiB before and 20,788 to 21,068 KiB after.
+These are sampled process values, not the aggregate old pipeline footprint;
+sampling can miss a peak before exit. Memory grows with the input size, and
+the adapter currently has no disk-spooling path. The
+[installed-stack validation](data/stack-installed-validation.json) retains
+these observations and the editor checks.
+
 ## Installed fork
 
 On 2026-11-08, `just install` built and installed this checkout using

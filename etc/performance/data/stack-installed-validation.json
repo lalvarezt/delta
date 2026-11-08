@@ -1,0 +1,245 @@
+{
+  "memory": [
+    {
+      "variant": "baseline",
+      "sampled_delta_high_water_kib": 18856
+    },
+    {
+      "variant": "native",
+      "sampled_delta_high_water_kib": 21056
+    },
+    {
+      "variant": "baseline",
+      "sampled_delta_high_water_kib": 18928
+    },
+    {
+      "variant": "native",
+      "sampled_delta_high_water_kib": 20788
+    },
+    {
+      "variant": "baseline",
+      "sampled_delta_high_water_kib": 18944
+    },
+    {
+      "variant": "native",
+      "sampled_delta_high_water_kib": 21068
+    }
+  ],
+  "interactive": {
+    "stage": true,
+    "unstage": true,
+    "rapid_navigation": true,
+    "edit_line": true,
+    "copy": {
+      "raw_tab": true,
+      "no_tab_markers": true,
+      "no_ansi": true,
+      "text": "\toldValue0 := fmt.Sprintf(\"00-small old %d\", 0)\n"
+    },
+    "terminal": {
+      "columns": 120,
+      "lines": 40,
+      "messages": "",
+      "mode": "n",
+      "buf": "/tmp/lazygit-delta-stack-perf/fixture/00-small.go"
+    }
+  },
+  "visible_body": {
+    "columns": 120,
+    "rows": [
+      {
+        "first_update_ms": 1.39799,
+        "first_body_ms": 48.177024,
+        "last_update_ms": 1422.920837,
+        "updates": 5,
+        "label": "baseline_02-large",
+        "body_seen": true
+      },
+      {
+        "first_update_ms": 1.429019,
+        "first_body_ms": 30.25896,
+        "last_update_ms": 1080.895842,
+        "updates": 11,
+        "label": "baseline_01-medium",
+        "body_seen": true
+      },
+      {
+        "first_update_ms": 1.160998,
+        "first_body_ms": 52.954696,
+        "last_update_ms": 599.094544,
+        "updates": 5,
+        "label": "baseline_02-large",
+        "body_seen": true
+      },
+      {
+        "first_update_ms": 1.219238,
+        "first_body_ms": 27.779786,
+        "last_update_ms": 2188.008255,
+        "updates": 6,
+        "label": "baseline_01-medium",
+        "body_seen": true
+      },
+      {
+        "first_update_ms": 1.072225,
+        "first_body_ms": 53.286403,
+        "last_update_ms": 1779.402528,
+        "updates": 5,
+        "label": "baseline_02-large",
+        "body_seen": true
+      },
+      {
+        "first_update_ms": 1.148656,
+        "first_body_ms": 27.681762,
+        "last_update_ms": 1439.515717,
+        "updates": 11,
+        "label": "baseline_01-medium",
+        "body_seen": true
+      },
+      {
+        "first_update_ms": 1.113899,
+        "first_body_ms": 51.106468,
+        "last_update_ms": 958.265117,
+        "updates": 5,
+        "label": "baseline_02-large",
+        "body_seen": true
+      },
+      {
+        "first_update_ms": 1.32127,
+        "first_body_ms": 27.344926,
+        "last_update_ms": 549.08092,
+        "updates": 5,
+        "label": "baseline_01-medium",
+        "body_seen": true
+      },
+      {
+        "first_update_ms": 1.673034,
+        "first_body_ms": 54.945986,
+        "last_update_ms": 2139.588915,
+        "updates": 6,
+        "label": "baseline_02-large",
+        "body_seen": true
+      },
+      {
+        "first_update_ms": 1.142028,
+        "first_body_ms": 25.651721,
+        "last_update_ms": 1798.979214,
+        "updates": 11,
+        "label": "baseline_01-medium",
+        "body_seen": true
+      },
+      {
+        "first_update_ms": 1.328162,
+        "first_body_ms": 51.203484,
+        "last_update_ms": 1320.700367,
+        "updates": 5,
+        "label": "baseline_02-large",
+        "body_seen": true
+      },
+      {
+        "first_update_ms": 2.496651,
+        "first_body_ms": 26.742397,
+        "last_update_ms": 911.994779,
+        "updates": 5,
+        "label": "baseline_01-medium",
+        "body_seen": true
+      },
+      {
+        "first_update_ms": 1.434144,
+        "first_body_ms": 33.053397,
+        "last_update_ms": 738.606,
+        "updates": 5,
+        "label": "native_02-large",
+        "body_seen": true
+      },
+      {
+        "first_update_ms": 1.110004,
+        "first_body_ms": 19.624874,
+        "last_update_ms": 2327.579987,
+        "updates": 6,
+        "label": "native_01-medium",
+        "body_seen": true
+      },
+      {
+        "first_update_ms": 0.95622,
+        "first_body_ms": 27.49266,
+        "last_update_ms": 1918.984764,
+        "updates": 5,
+        "label": "native_02-large",
+        "body_seen": true
+      },
+      {
+        "first_update_ms": 2.343791,
+        "first_body_ms": 24.494857,
+        "last_update_ms": 1563.977992,
+        "updates": 11,
+        "label": "native_01-medium",
+        "body_seen": true
+      },
+      {
+        "first_update_ms": 1.532217,
+        "first_body_ms": 30.028339,
+        "last_update_ms": 1099.637133,
+        "updates": 5,
+        "label": "native_02-large",
+        "body_seen": true
+      },
+      {
+        "first_update_ms": 1.320328,
+        "first_body_ms": 21.877817,
+        "last_update_ms": 691.516647,
+        "updates": 5,
+        "label": "native_01-medium",
+        "body_seen": true
+      },
+      {
+        "first_update_ms": 1.14311,
+        "first_body_ms": 35.038256,
+        "last_update_ms": 2281.686525,
+        "updates": 6,
+        "label": "native_02-large",
+        "body_seen": true
+      },
+      {
+        "first_update_ms": 1.212829,
+        "first_body_ms": 21.037546,
+        "last_update_ms": 1930.60979,
+        "updates": 12,
+        "label": "native_01-medium",
+        "body_seen": true
+      },
+      {
+        "first_update_ms": 1.307052,
+        "first_body_ms": 31.958292,
+        "last_update_ms": 1462.027214,
+        "updates": 5,
+        "label": "native_02-large",
+        "body_seen": true
+      },
+      {
+        "first_update_ms": 1.180591,
+        "first_body_ms": 26.811358,
+        "last_update_ms": 1051.12676,
+        "updates": 5,
+        "label": "native_01-medium",
+        "body_seen": true
+      },
+      {
+        "first_update_ms": 1.418626,
+        "first_body_ms": 28.913536,
+        "last_update_ms": 640.923458,
+        "updates": 5,
+        "label": "native_02-large",
+        "body_seen": true
+      },
+      {
+        "first_update_ms": 1.093461,
+        "first_body_ms": 20.023907,
+        "last_update_ms": 2293.803635,
+        "updates": 13,
+        "label": "native_01-medium",
+        "body_seen": true
+      }
+    ],
+    "lines": 40
+  }
+}

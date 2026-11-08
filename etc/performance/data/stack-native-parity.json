@@ -1,0 +1,65 @@
+{
+  "normal": {
+    "passed": 14,
+    "fixtures": [
+      {
+        "name": "go-30",
+        "bytes": 2587
+      },
+      {
+        "name": "go-1000",
+        "bytes": 87671
+      },
+      {
+        "name": "go-12000",
+        "bytes": 1107673
+      },
+      {
+        "name": "go-history",
+        "bytes": 1886941
+      },
+      {
+        "name": "empty",
+        "bytes": 0
+      },
+      {
+        "name": "plain",
+        "bytes": 35
+      },
+      {
+        "name": "unicode",
+        "bytes": 137
+      }
+    ],
+    "modes": [
+      "unified",
+      "side-by-side"
+    ],
+    "metadata": true
+  },
+  "edge": {
+    "passed": 20,
+    "fixtures": [
+      {
+        "name": "binary-links-names",
+        "bytes": 686
+      },
+      {
+        "name": "existing-stat",
+        "bytes": 768
+      },
+      {
+        "name": "invalid-utf8",
+        "bytes": 4
+      },
+      {
+        "name": "no-final-newline",
+        "bytes": 10
+      },
+      {
+        "name": "crlf",
+        "bytes": 12
+      }
+    ]
+  }
+}
