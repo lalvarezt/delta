@@ -1,0 +1,26 @@
+{
+  "installed_at": "2026-11-08T12:44:30.162Z",
+  "source_revision_at_build": "797867c4ce38f135a9730ba842ccade5b612ff49",
+  "source_branch": "experiments",
+  "command": "just install",
+  "cargo_command": "cargo install --path . --locked --force",
+  "executable": "/home/lalvarezt/.cargo/bin/delta",
+  "version": "delta 0.20.1",
+  "installed_sha256": "3256f4f1ebe8d292fbcd6aa4f0edac75f7f420fa8a243f2aaf6e83d4e0b62d81",
+  "release_sha256": "3256f4f1ebe8d292fbcd6aa4f0edac75f7f420fa8a243f2aaf6e83d4e0b62d81",
+  "identical_to_release": true,
+  "homebrew_formula": "git-delta",
+  "homebrew_installed_versions": [],
+  "automatic_dependency_removal": false,
+  "resolution": {
+    "bash": "/home/lalvarezt/.cargo/bin/delta",
+    "fish": "/home/lalvarezt/.cargo/bin/delta",
+    "neovim": "/home/lalvarezt/.cargo/bin/delta"
+  },
+  "wrapper_smoke": {
+    "exit": 0,
+    "osc1717_handshake": true,
+    "lazygit_edit_links": true
+  },
+  "rust_source_and_lockfile_unchanged": true
+}

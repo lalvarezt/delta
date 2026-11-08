@@ -28,6 +28,17 @@ git switch experiments
 git merge main
 ```
 
+To install this checkout's optimized executable:
+
+```sh
+just install
+```
+
+This uses `cargo install --path . --locked --force`. Cargo installs into its
+configured installation root, normally `~/.cargo/bin`. Keep that directory on
+`PATH` and remove another delta installation if it takes precedence. Run
+`just install` again after updating this checkout.
+
 The fork's [performance analysis](etc/performance/fork-performance.md) records
 measurements and integration requirements for lazygit and Neovim.
 

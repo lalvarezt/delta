@@ -30,6 +30,7 @@ Prefer `just` over `make`: just is available on all the user's machines.
 
 - `just format`: run `cargo fmt` before every commit.
 - `just build`: build the optimized executable with `cargo build --release`.
+- `just install`: install this checkout's release executable with Cargo.
 - `just unit-test`: run the full Rust test suite with `cargo test`.
 - `just lint`: run `cargo clippy --all-targets`.
 - `just check`: check formatting, run Clippy and the Rust tests, and build release.

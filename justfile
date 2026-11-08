@@ -4,6 +4,9 @@ default:
 build:
     cargo build --release
 
+install:
+    cargo install --path . --locked --force
+
 format:
     cargo fmt
 

@@ -6,8 +6,9 @@ then avoid rendering work the user never sees. Syntax highlighting remains the
 dominant cost on the source-history workloads measured here.
 
 This investigation starts from delta commit `3c2269c`. The source changes are on
-`experiments`. The installed executable and personal
-configuration have not been replaced.
+`experiments`. Measurements were collected before replacing the installed
+executable. The fork is now installed through `just install`; the personal
+rendering configuration has not been changed by this work.
 
 ## What the integrations actually run
 
@@ -257,5 +258,19 @@ It is recorded for later work in
 `~/git-repos/lazygit/docs-master/dev/Delta-integration-follow-up.md`; no fix was
 made to the wrapper or lazygit implementation.
 
-No SSH connection, remote change, installation, or personal configuration edit
-was needed. Windows and other operating systems have not been measured.
+The initial performance investigation needed no SSH connection or personal
+configuration edit. Windows and other operating systems have not been measured.
+
+## Installed fork
+
+On 2026-11-08, `just install` built and installed this checkout using
+`cargo install --path . --locked --force`. On this host the executable is
+`~/.cargo/bin/delta`. The Homebrew `git-delta` formula was then uninstalled,
+with automatic dependency removal disabled. No installed formula depended on it.
+
+Fresh Bash, Fish, and Neovim processes resolve delta to the Cargo installation.
+The installed executable matches the release build and emits the negotiated
+OSC 1717 handshake and lazygit editor links. The
+[installation evidence](data/fork-installation.json) records paths and hashes.
+Run `just install` again after updating the fork. Cargo's configured install
+root determines the destination; `~/.cargo/bin` is its default on this host.
