@@ -1,3 +1,36 @@
+## Personal fork disclaimer
+
+> [!WARNING]
+> **This is a personal project, provided as-is.**
+>
+> I maintain this fork for my own use. Expect rough edges and changes driven by
+> my needs, with no guarantees of stability, maintenance, or support.
+>
+> Most of the changes in this fork were developed with AI assistance.
+
+This fork builds on [delta](https://github.com/dandavison/delta) by
+[Dan Davison](https://github.com/dandavison) and the
+[delta contributors](https://github.com/dandavison/delta/graphs/contributors).
+
+`experiments` is this fork's default branch. `main` mirrors upstream; the
+`upstream` remote points to `https://github.com/dandavison/delta.git`.
+The local `main` branch tracks `upstream/main`, while `experiments` tracks
+`origin/experiments`.
+
+To bring upstream updates into the fork:
+
+```sh
+git fetch upstream
+git switch main
+git merge --ff-only upstream/main
+git push origin main
+git switch experiments
+git merge main
+```
+
+The fork's [performance analysis](etc/performance/fork-performance.md) records
+measurements and integration requirements for lazygit and Neovim.
+
 <p align="center">
   <img width=400px src="https://user-images.githubusercontent.com/52205/147996902-9829bd3f-cd33-466e-833e-49a6f3ebd623.png" alt="image" />
 </p>
