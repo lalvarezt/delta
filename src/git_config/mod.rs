@@ -138,6 +138,7 @@ impl GitConfig {
             .find_remote("origin")
             .ok()?
             .url()
+            .ok()
             .and_then(|url| GitRemoteRepo::from_str(url).ok())
     }
 
@@ -153,7 +154,7 @@ impl GitConfig {
         while let Some(entry) = entries.next() {
             let entry = entry.unwrap();
             let name = entry.name().unwrap();
-            f(name, entry.value());
+            f(name, entry.value().ok());
         }
     }
 }
