@@ -17,18 +17,12 @@ use Operation::*;
 
 /// Needleman-Wunsch / Wagner-Fischer table for computation of edit distance and associated
 /// alignment.
-#[derive(Clone, Debug)]
-struct Cell {
-    parent: usize,
-    operation: Operation,
-    cost: usize,
-}
-
 #[derive(Debug)]
 pub struct Alignment<'a> {
     pub x: Vec<&'a str>,
     pub y: Vec<&'a str>,
-    table: Vec<Cell>,
+    table: Vec<Operation>,
+    cost: usize,
     dim: [usize; 2],
 }
 
@@ -38,15 +32,14 @@ impl<'a> Alignment<'a> {
         // TODO: Something downstream of the alignment algorithm requires that the first token in
         // both x and y is "", so this is explicitly inserted in `tokenize()`.
         let dim = [y.len() + 1, x.len() + 1];
-        let table = vec![
-            Cell {
-                parent: 0,
-                operation: NoOp,
-                cost: 0
-            };
-            dim[0] * dim[1]
-        ];
-        let mut alignment = Self { x, y, table, dim };
+        let table = vec![NoOp; dim[0] * dim[1]];
+        let mut alignment = Self {
+            x,
+            y,
+            table,
+            cost: 0,
+            dim,
+        };
         alignment.fill();
         alignment
     }
@@ -57,25 +50,24 @@ impl<'a> Alignment<'a> {
         // table. Also, we insert a 0 in cell (0, 0) of the table, so x and y are shifted by one
         // position. Therefore, the element corresponding to (x[i], y[j]) is in column (i + 1) and
         // row (j + 1); the index of this element is given by index(i, j).
-        for i in 1..self.dim[1] {
-            self.table[i] = Cell {
-                parent: 0,
-                operation: Deletion,
-                cost: i * DELETION_COST + INITIAL_MISMATCH_PENALTY,
-            };
+        // Traceback needs one operation per cell. Costs are needed only for the
+        // current and preceding rows, which share this buffer.
+        let mut costs = vec![0; self.dim[1]];
+        for (i, cost) in costs.iter_mut().enumerate().skip(1) {
+            self.table[i] = Deletion;
+            *cost = i * DELETION_COST + INITIAL_MISMATCH_PENALTY;
         }
         for j in 1..self.dim[0] {
-            self.table[j * self.dim[1]] = Cell {
-                parent: 0,
-                operation: Insertion,
-                cost: j * INSERTION_COST + INITIAL_MISMATCH_PENALTY,
-            };
+            self.table[j * self.dim[1]] = Insertion;
         }
 
-        for (i, x_i) in self.x.iter().enumerate() {
-            for (j, y_j) in self.y.iter().enumerate() {
-                let (left, diag, up) =
-                    (self.index(i, j + 1), self.index(i, j), self.index(i + 1, j));
+        // Visit adjacent cells in the row-major table. Both the preceding row and
+        // the preceding column are complete when a cell is evaluated.
+        for (j, y_j) in self.y.iter().enumerate() {
+            let mut diagonal_cost = costs[0];
+            costs[0] = (j + 1) * INSERTION_COST + INITIAL_MISMATCH_PENALTY;
+            for (i, x_i) in self.x.iter().enumerate() {
+                let (left, up) = (self.index(i, j + 1), self.index(i + 1, j));
                 // The order of the candidates matters if two of them have the
                 // same cost as in that case we choose the first one. Consider
                 // insertions and deletions before matches in order to group
@@ -83,57 +75,64 @@ impl<'a> Alignment<'a> {
                 // order to highlight moved tokens as a deletion followed by an
                 // insertion (as the edit sequence is read backwards we need to
                 // choose the insertion first)
+                let mismatch_cost = |cost, operation, basic_cost| {
+                    cost + basic_cost
+                        + if operation == NoOp {
+                            INITIAL_MISMATCH_PENALTY
+                        } else {
+                            0
+                        }
+                };
                 let candidates = [
-                    Cell {
-                        parent: up,
-                        operation: Insertion,
-                        cost: self.mismatch_cost(up, INSERTION_COST),
-                    },
-                    Cell {
-                        parent: left,
-                        operation: Deletion,
-                        cost: self.mismatch_cost(left, DELETION_COST),
-                    },
-                    Cell {
-                        parent: diag,
-                        operation: NoOp,
-                        cost: if x_i == y_j {
-                            self.table[diag].cost
+                    (
+                        Insertion,
+                        mismatch_cost(costs[i + 1], self.table[up], INSERTION_COST),
+                    ),
+                    (
+                        Deletion,
+                        mismatch_cost(costs[i], self.table[left], DELETION_COST),
+                    ),
+                    (
+                        NoOp,
+                        if x_i == y_j {
+                            diagonal_cost
                         } else {
                             usize::MAX
                         },
-                    },
+                    ),
                 ];
                 let index = self.index(i + 1, j + 1);
-                self.table[index] = candidates
-                    .iter()
-                    .min_by_key(|cell| cell.cost)
-                    .unwrap()
-                    .clone();
+                let &(operation, cost) = candidates.iter().min_by_key(|(_, cost)| *cost).unwrap();
+                self.table[index] = operation;
+                diagonal_cost = costs[i + 1];
+                costs[i + 1] = cost;
             }
         }
-    }
-
-    fn mismatch_cost(&self, parent: usize, basic_cost: usize) -> usize {
-        self.table[parent].cost
-            + basic_cost
-            + if self.table[parent].operation == NoOp {
-                INITIAL_MISMATCH_PENALTY
-            } else {
-                0
-            }
+        self.cost = costs[self.x.len()];
     }
 
     /// Read edit operations from the table.
     pub fn operations(&self) -> Vec<Operation> {
         let mut ops = VecDeque::with_capacity(max(self.x.len(), self.y.len()));
-        let mut cell = &self.table[self.index(self.x.len(), self.y.len())];
+        let (mut i, mut j) = (self.x.len(), self.y.len());
         loop {
-            ops.push_front(cell.operation);
-            if cell.parent == 0 {
+            let operation = self.table[self.index(i, j)];
+            ops.push_front(operation);
+            // The initial row and column terminate traceback, including (0, 0).
+            if i == 0 || j == 0 {
                 break;
             }
-            cell = &self.table[cell.parent];
+            match operation {
+                Insertion => j -= 1,
+                Deletion => i -= 1,
+                NoOp => {
+                    i -= 1;
+                    j -= 1;
+                }
+            }
+            if i == 0 && j == 0 {
+                break;
+            }
         }
         Vec::from(ops)
     }
@@ -181,6 +180,92 @@ mod tests {
     use super::*;
 
     use unicode_segmentation::UnicodeSegmentation;
+
+    #[test]
+    fn test_alignment_matches_full_cost_table() {
+        // Include empty inputs, repeated tokens, and equal-cost paths. Traceback
+        // tie-breaking determines which words receive emphasis in the output.
+        fn reference(x: &[&str], y: &[&str]) -> (usize, Vec<Operation>) {
+            let width = x.len() + 1;
+            let mut table = vec![(0, NoOp, 0); width * (y.len() + 1)];
+            for (i, cell) in table.iter_mut().enumerate().take(width).skip(1) {
+                *cell = (i * DELETION_COST + INITIAL_MISMATCH_PENALTY, Deletion, 0);
+            }
+            for j in 1..=y.len() {
+                table[j * width] = (j * INSERTION_COST + INITIAL_MISMATCH_PENALTY, Insertion, 0);
+            }
+            for (i, a) in x.iter().enumerate() {
+                for (j, b) in y.iter().enumerate() {
+                    let (left, up, diagonal) =
+                        (i + (j + 1) * width, i + 1 + j * width, i + j * width);
+                    let mismatch = |parent: usize, cost| {
+                        table[parent].0
+                            + cost
+                            + if table[parent].1 == NoOp {
+                                INITIAL_MISMATCH_PENALTY
+                            } else {
+                                0
+                            }
+                    };
+                    table[i + 1 + (j + 1) * width] = *[
+                        (mismatch(up, INSERTION_COST), Insertion, up),
+                        (mismatch(left, DELETION_COST), Deletion, left),
+                        (
+                            if a == b {
+                                table[diagonal].0
+                            } else {
+                                usize::MAX
+                            },
+                            NoOp,
+                            diagonal,
+                        ),
+                    ]
+                    .iter()
+                    .min_by_key(|cell| cell.0)
+                    .unwrap();
+                }
+            }
+            let mut index = table.len() - 1;
+            let cost = table[index].0;
+            let mut operations = Vec::new();
+            loop {
+                let (_, operation, parent) = table[index];
+                operations.push(operation);
+                if parent == 0 {
+                    break;
+                }
+                index = parent;
+            }
+            operations.reverse();
+            (cost, operations)
+        }
+
+        let mut inputs = vec![Vec::new()];
+        let mut level = vec![Vec::new()];
+        for _ in 0..4 {
+            level = level
+                .iter()
+                .flat_map(|tokens| {
+                    ["", "a", "b"].iter().map(move |token| {
+                        let mut next = tokens.clone();
+                        next.push(*token);
+                        next
+                    })
+                })
+                .collect();
+            inputs.extend(level.clone());
+        }
+        for x in &inputs {
+            for y in &inputs {
+                let alignment = Alignment::new(x.clone(), y.clone());
+                assert_eq!(
+                    (alignment.cost, alignment.operations()),
+                    reference(x, y),
+                    "{x:?} -> {y:?}"
+                );
+            }
+        }
+    }
 
     #[test]
     fn test_run_length_encode() {
@@ -405,42 +490,7 @@ mod tests {
 
         /// Compute levenshtein distance from the filled table.
         pub fn levenshtein_distance(&self) -> usize {
-            self.table[self.index(self.x.len(), self.y.len())].cost
-        }
-
-        #[allow(dead_code)]
-        fn format_cell(&self, cell: &Cell) -> String {
-            let parent = &self.table[cell.parent];
-            let op = match cell.operation {
-                Deletion => "-",
-                Insertion => "+",
-                NoOp => ".",
-            };
-            format!("{}{}{}", parent.cost, op, cell.cost)
-        }
-
-        #[allow(dead_code)]
-        fn print(&self) {
-            println!("x: {:?}", self.x);
-            println!("y: {:?}", self.y);
-            println!();
-            print!("      ");
-            for j in 0..self.dim[1] {
-                print!("{}     ", if j > 0 { self.x[j - 1] } else { " " })
-            }
-            println!();
-
-            for i in 0..self.dim[0] {
-                for j in 0..self.dim[1] {
-                    if j == 0 {
-                        print!("{}     ", if i > 0 { self.y[i - 1] } else { " " })
-                    }
-                    let cell = &self.table[self.index(j, i)];
-                    print!("{}   ", self.format_cell(cell));
-                }
-                println!();
-            }
-            println!();
+            self.cost
         }
     }
 }
