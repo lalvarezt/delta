@@ -261,6 +261,53 @@ made to the wrapper or lazygit implementation.
 The initial performance investigation needed no SSH connection or personal
 configuration edit. Windows and other operating systems have not been measured.
 
+## Scope-style caching follow-up
+
+The complete-stack investigation resumed after installing lazygit `b077f37c`
+and delta `f9f227f` with `just install`. Neovim resolved the same installed
+executables as the shell. Its interactive test terminal was 120 columns by
+40 rows. The configured renderer remained the chezmoi wrapper with the
+Catppuccin theme, tab markers, statistics, and editor hyperlinks.
+
+A fresh CPU profile of the configured Go-history render attributed substantial
+time to Syntect's scope matching and theme-style resolution. The replacement
+highlighter caches the resolved style by the complete scope stack. It continues
+to use Syntect's parser and applies every scope operation, including operations
+without visible text. It preserves region boundaries, multiline state, and
+theme selector precedence. Identical text alone is never a cache key.
+
+The theme is fixed for the lifetime of a painter. A hunk or syntax reset clears
+parser state and its scope stack while retaining the theme cache. The cache
+holds at most 1,024 distinct stacks and clears on overflow. Eviction changes
+work performed, not output. The cache is local to one renderer process; it does
+not reuse configuration or content across invocations.
+
+The existing comparison runner verifies exact bytes before timing. With
+`OSC1717=V1`, the configured matrix passed all 24 fixture/mode combinations,
+including unified, side-by-side, and syntax-disabled rendering. Seven paired
+samples after three warmups measured Go-history unified rendering at 580 ms
+before and 414 ms after; side-by-side at 816 ms and 620 ms. Rust-history unified
+fell from 349 ms to 306 ms. Tiny cases show millisecond-scale mixed variation,
+so no startup improvement is claimed. The complete wrapper comparison also
+preserved exact bytes, including its statistics, tab markers, OSC records, and
+editor links. Nine paired samples measured Go history at 1,005 ms before and
+548 ms after, and the synthetic 12,000-line Go change at 1,202 ms and 935 ms.
+These are different workloads and timing boundaries, not interchangeable
+measurements. The samples are in
+[the configured comparison](data/stack-scope-cache.json) and
+[the wrapper comparison](data/stack-scope-cache-wrapper.json).
+
+Differential unit tests compare exact styled regions against Syntect across
+12 languages and every bundled theme, including Unicode, comments, embedded
+languages, and unterminated input. Additional checks cover syntax resets and
+cache eviction. `just check` passes with 482 Rust tests and 8 ignored. The four
+previously documented Clippy warnings remain; no new warning is introduced.
+
+Terminal-buffer first-body measurements gave about 53 ms for the large change
+on the baseline. Terminal-buffer last-update time was rejected as a completion
+metric because unrelated refreshes contribute updates. Process completion and
+first visible body are recorded as separate boundaries.
+
 ## Installed fork
 
 On 2026-11-08, `just install` built and installed this checkout using

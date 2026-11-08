@@ -4,7 +4,6 @@ use std::io::Write;
 
 use ansi_term::ANSIString;
 use itertools::Itertools;
-use syntect::easy::HighlightLines;
 use syntect::highlighting::Style as SyntectStyle;
 use syntect::parsing::{SyntaxReference, SyntaxSet};
 
@@ -16,6 +15,7 @@ use crate::features::line_numbers::{self, LineNumbersData};
 use crate::features::side_by_side::ansifill;
 use crate::features::side_by_side::{self, PanelSide};
 use crate::handlers::merge_conflict;
+use crate::highlight::CachedHighlighter;
 use crate::minusplus::*;
 use crate::paint::superimpose_style_sections::superimpose_style_sections;
 use crate::style::Style;
@@ -29,7 +29,7 @@ pub struct Painter<'p> {
     pub plus_lines: Vec<(String, State)>,
     pub writer: &'p mut dyn Write,
     pub syntax: &'p SyntaxReference,
-    pub highlighter: Option<HighlightLines<'p>>,
+    pub highlighter: Option<CachedHighlighter<'p>>,
     pub config: &'p config::Config,
     pub output_buffer: String,
     // If config.line_numbers is true, then the following is always Some().
@@ -155,7 +155,11 @@ impl<'p> Painter<'p> {
 
     pub fn set_highlighter(&mut self) {
         if let Some(ref syntax_theme) = self.config.syntax_theme {
-            self.highlighter = Some(HighlightLines::new(self.syntax, syntax_theme))
+            if let Some(highlighter) = self.highlighter.as_mut() {
+                highlighter.reset(self.syntax);
+            } else {
+                self.highlighter = Some(CachedHighlighter::new(self.syntax, syntax_theme));
+            }
         };
     }
 
@@ -622,7 +626,7 @@ pub fn paint_minus_and_plus_lines(
     lines: MinusPlus<&Vec<(String, State)>>,
     line_numbers_data: &mut Option<LineNumbersData>,
     diff_line_metadata: &mut Option<&mut DiffLineMetadata>,
-    highlighter: &mut Option<HighlightLines>,
+    highlighter: &mut Option<CachedHighlighter>,
     output_buffer: &mut String,
     config: &config::Config,
 ) {
@@ -703,7 +707,7 @@ pub fn paint_minus_and_plus_lines(
 
 pub fn get_syntax_style_sections_for_lines<'a>(
     lines: &'a [(String, State)],
-    highlighter: Option<&mut HighlightLines>,
+    highlighter: Option<&mut CachedHighlighter>,
     config: &config::Config,
 ) -> Vec<LineSections<'a, SyntectStyle>> {
     let mut line_sections = Vec::new();

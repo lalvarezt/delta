@@ -11,6 +11,7 @@ mod features;
 mod format;
 mod git_config;
 mod handlers;
+mod highlight;
 mod minusplus;
 mod options;
 mod paint;
