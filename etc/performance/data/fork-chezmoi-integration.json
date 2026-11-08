@@ -1,0 +1,157 @@
+{
+  "created_at": "2026-11-08T12:27:31.466Z",
+  "chezmoi_source": "/home/lalvarezt/.local/share/chezmoi",
+  "chezmoi_revision": "3353b1b1540a52569b4a613aaff6b5acb14c0e20",
+  "lazygit_revision": "b2c81f474cb2cb7017f50fcd3be9255daa7ed114",
+  "source_sha256": {
+    "dot_config/lazygit/config.yml": "067e22954c117c3b077248d2a362ede71b991df16a57e986f36c484ee148f3af",
+    "dot_config/git/config.tmpl": "f81b7f9f115170d8de0bfc09410805d674ba6c0cca69e5c2e53102307e3a4ee9",
+    "dot_local/bin/executable_lazygit-delta.sh": "5fc3c6a3d5cc6dcedcfa1bf078b5648ef660f839ee724fd373bd39a6d240d1f9",
+    "dot_config/fish/functions/setup-lazygit.fish": "160c55f9e19700920a6b51a2e36d72f9c446355e858c5e52fc904f3c8ada7216",
+    "dot_config/nvim/lua/plugins/snacks.lua": "0d726651a756038be97bbbdc67bcda5a9e6463dd7d0ec2379cd3533ecb99be21",
+    "dot_config/nvim/lua/plugins/snacks/pickers.lua": "5b595bb768e31ac3887b6965c28d34db72dd9c68038f09cab1f8d1ccb2daa8ed"
+  },
+  "osc1717": "V1",
+  "checks": [
+    {
+      "fixture": "empty",
+      "side_by_side": false,
+      "identical": true,
+      "handshake": true,
+      "metadata_records": 0,
+      "edit_links": 0
+    },
+    {
+      "fixture": "empty",
+      "side_by_side": true,
+      "identical": true,
+      "handshake": true,
+      "metadata_records": 0,
+      "edit_links": 0
+    },
+    {
+      "fixture": "go-small",
+      "side_by_side": false,
+      "identical": true,
+      "handshake": true,
+      "metadata_records": 15,
+      "edit_links": 322
+    },
+    {
+      "fixture": "go-small",
+      "side_by_side": true,
+      "identical": true,
+      "handshake": true,
+      "metadata_records": 590,
+      "edit_links": 322
+    },
+    {
+      "fixture": "tabs-unicode",
+      "side_by_side": false,
+      "identical": true,
+      "handshake": true,
+      "metadata_records": 7,
+      "edit_links": 4
+    },
+    {
+      "fixture": "tabs-unicode",
+      "side_by_side": true,
+      "identical": true,
+      "handshake": true,
+      "metadata_records": 8,
+      "edit_links": 4
+    },
+    {
+      "fixture": "empty",
+      "wrapper": true,
+      "identical": true,
+      "handshake": true,
+      "metadata_records": 0
+    },
+    {
+      "fixture": "go-small",
+      "wrapper": true,
+      "identical": true,
+      "handshake": true,
+      "metadata_records": 15
+    },
+    {
+      "fixture": "tabs-unicode",
+      "wrapper": true,
+      "identical": true,
+      "handshake": true,
+      "metadata_records": 7
+    },
+    {
+      "fixture": "go-first-parent-unified",
+      "command": "git diff HEAD^ HEAD --color=always",
+      "side_by_side": false,
+      "identical": true,
+      "handshake": true,
+      "records_by_kind": {
+        "f": 36,
+        "h": 218,
+        "c": 350,
+        "a": 1664,
+        "d": 123
+      }
+    },
+    {
+      "fixture": "go-first-parent-unified",
+      "command": "git diff HEAD^ HEAD --color=always",
+      "side_by_side": true,
+      "identical": true,
+      "handshake": true,
+      "records_by_kind": {
+        "f": 36,
+        "h": 218,
+        "c": 1012,
+        "a": 2606,
+        "d": 224
+      }
+    }
+  ],
+  "head_fixture": {
+    "format": "combined merge diff",
+    "command": "git show HEAD --format= --color=always",
+    "files": [
+      "AGENTS.md",
+      "pkg/gocui/search_test.go",
+      "pkg/gocui/view.go"
+    ],
+    "unified_content_metadata_emitted": false,
+    "note": "DiffLineMetadata::osc_for_line explicitly excludes combined diffs. Header metadata and handshake are present; no end-to-end lazygit action failure is claimed."
+  },
+  "wrapper_failure": {
+    "direct_stub_exit": 42,
+    "wrapper_exit": 0,
+    "stderr": "synthetic renderer failure",
+    "cause": "The final awk process determines POSIX pipeline status."
+  },
+  "final_deployment_check": {
+    "checked_at": "2026-11-08T12:32:43.378Z",
+    "chezmoi_revision": "3353b1b1540a52569b4a613aaff6b5acb14c0e20",
+    "files": [
+      {
+        "source": "dot_config/lazygit/config.yml",
+        "content_equal": true,
+        "source_sha256": "067e22954c117c3b077248d2a362ede71b991df16a57e986f36c484ee148f3af"
+      },
+      {
+        "source": "dot_local/bin/executable_lazygit-delta.sh",
+        "content_equal": true,
+        "source_sha256": "5fc3c6a3d5cc6dcedcfa1bf078b5648ef660f839ee724fd373bd39a6d240d1f9"
+      },
+      {
+        "source": "dot_config/nvim/lua/plugins/snacks.lua",
+        "content_equal": true,
+        "source_sha256": "0d726651a756038be97bbbdc67bcda5a9e6463dd7d0ec2379cd3533ecb99be21"
+      },
+      {
+        "source": "dot_config/nvim/lua/plugins/snacks/pickers.lua",
+        "content_equal": true,
+        "source_sha256": "5b595bb768e31ac3887b6965c28d34db72dd9c68038f09cab1f8d1ccb2daa8ed"
+      }
+    ]
+  }
+}

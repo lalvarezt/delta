@@ -1,0 +1,36 @@
+{
+  "producer_pause_ms": 200,
+  "description": "Tiny diff with the final context line delayed by 200 ms; output is piped, not a terminal. Optimized executable used in both paths.",
+  "results": [
+    {
+      "kind": "direct",
+      "first_output_ms": 12.121160000000001,
+      "complete_ms": 205.575854
+    },
+    {
+      "kind": "wrapper",
+      "first_output_ms": 220.612605,
+      "complete_ms": 221.958902
+    },
+    {
+      "kind": "direct",
+      "first_output_ms": 11.943929000000026,
+      "complete_ms": 203.50374699999998
+    },
+    {
+      "kind": "wrapper",
+      "first_output_ms": 218.7944,
+      "complete_ms": 219.88560900000004
+    },
+    {
+      "kind": "direct",
+      "first_output_ms": 13.102569000000017,
+      "complete_ms": 204.11507900000004
+    },
+    {
+      "kind": "wrapper",
+      "first_output_ms": 220.26226700000007,
+      "complete_ms": 221.56310699999995
+    }
+  ]
+}

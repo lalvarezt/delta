@@ -1,0 +1,25 @@
+{
+  "rust_tests": {
+    "passed": 479,
+    "failed": 0,
+    "ignored": 8
+  },
+  "format_exit": 0,
+  "clippy_all_targets_exit": 0,
+  "pre_existing_clippy_warnings": 4,
+  "deprecated_options_exit": 0,
+  "pager_history_exit": 0,
+  "pager_test_isolation": "Copied test redirects ~/.lesshst deletion into a temporary directory; XDG_DATA_HOME and LESSHISTFILE are temporary; runs through script for a PTY.",
+  "raw_full_history": {
+    "baseline_exit": 1,
+    "optimized_exit": 1,
+    "same_failure_body": true,
+    "missing_binary_notices": 21,
+    "body_sha256": "49fa9d6fb1b366c73f3ef70aa31d023d34d1e1e82b1eebec7459b61c34b969a0"
+  },
+  "negative_comparator": {
+    "exit": 1,
+    "reason": "Output mismatch: tiny, unified",
+    "result_file_created": false
+  }
+}

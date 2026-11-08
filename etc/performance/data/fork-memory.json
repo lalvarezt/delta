@@ -1,0 +1,26 @@
+{
+  "description": "Linux /proc VmHWM sampled every 2 ms during long-lines fixture; three fresh invocations, isolated Git configuration. Sampling may miss a peak immediately before exit.",
+  "input_sha256": "fd305f19db35c22708541c8336fdb11e219af1a6ae42c5c6aa3f7ec79762825f",
+  "results": [
+    {
+      "variant": "baseline",
+      "sampled_vm_hwm_kib": [
+        25936,
+        25636,
+        25504
+      ]
+    },
+    {
+      "variant": "optimized",
+      "sampled_vm_hwm_kib": [
+        13500,
+        13572,
+        13564
+      ]
+    }
+  ],
+  "layout_bytes": {
+    "original_cell": 24,
+    "operation": 1
+  }
+}
