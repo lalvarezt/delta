@@ -369,6 +369,31 @@ the adapter currently has no disk-spooling path. The
 [installed-stack validation](data/stack-installed-validation.json) retains
 these observations and the editor checks.
 
+## Theme choice is not the complete rendering cost
+
+The user challenged the roughly 500 ms result after installation. That result
+is the complete rendering of a 1,886,941-byte diff covering 50 Go commits, not
+time spent selecting palette colors. It includes source parsing, edit alignment,
+style application, metadata and hyperlink formatting, and output.
+
+A fresh installed-build profile points to Syntect/Oniguruma parsing and regex
+matching as the main remaining work. Theme-selector matching no longer appears
+among the dominant leaf costs after the scope cache. The palette itself is
+data; the former expensive operation was repeatedly resolving context-sensitive
+selectors for syntax scopes.
+
+Nine paired diagnostic runs gave complete-process medians of 489.33 ms with
+Catppuccin, 477.98 ms with `base16-ocean.dark`, and 155.75 ms with syntax
+highlighting disabled. The small difference between themes also includes
+changes in formatted output. The disabled-syntax case skips parsing as well as
+theme application. Neither subtraction measures pure palette-lookup cost.
+Calling all of that difference "theme cost" would be incorrect.
+
+The [profiling evidence](data/theme-cost-attribution.json) retains the complete
+timings and sampled functions. Additional theme changes are not justified by
+this profile. The larger opportunity is avoiding repeated source parsing while
+preserving multiline state, cancellation, and configuration invalidation.
+
 ## Installed fork
 
 On 2026-11-08, `just install` built and installed this checkout using

@@ -1,0 +1,173 @@
+{
+  "recorded": "2026-11-08",
+  "revision": "14dae54e7b93ceb0b8e5b22558a3841515cb0a9a",
+  "binary_sha256": "e7d2b1553934e2d8aa41e610e99337519148739f75bc2d15513d4593ac0b1bbe",
+  "input_bytes": 1886941,
+  "workload": "50-commit Go history",
+  "boundary": "Complete fresh delta process; input and output piped; width 80; personal Git configuration; OSC1717 V1; paging disabled",
+  "caveat": "This is a diagnostic comparison. Different syntax themes change styled output; syntax-theme=none disables syntax parsing as well as theme application, so subtraction does not isolate palette-lookup cost.",
+  "rows": [
+    {
+      "name": "catppuccin",
+      "ms": 491.296207
+    },
+    {
+      "name": "ocean",
+      "ms": 483.74675800000006
+    },
+    {
+      "name": "no-syntax",
+      "ms": 153.73350200000004
+    },
+    {
+      "name": "no-syntax",
+      "ms": 151.56049400000006
+    },
+    {
+      "name": "ocean",
+      "ms": 487.375861
+    },
+    {
+      "name": "catppuccin",
+      "ms": 486.39057
+    },
+    {
+      "name": "catppuccin",
+      "ms": 489.35740499999974
+    },
+    {
+      "name": "ocean",
+      "ms": 481.89337000000023
+    },
+    {
+      "name": "no-syntax",
+      "ms": 159.81522900000027
+    },
+    {
+      "name": "no-syntax",
+      "ms": 167.08184900000015
+    },
+    {
+      "name": "ocean",
+      "ms": 490.2573470000002
+    },
+    {
+      "name": "catppuccin",
+      "ms": 496.69141300000047
+    },
+    {
+      "name": "catppuccin",
+      "ms": 484.65002900000036
+    },
+    {
+      "name": "ocean",
+      "ms": 477.0459700000001
+    },
+    {
+      "name": "no-syntax",
+      "ms": 154.1328310000008
+    },
+    {
+      "name": "no-syntax",
+      "ms": 157.1047779999999
+    },
+    {
+      "name": "ocean",
+      "ms": 471.60567600000013
+    },
+    {
+      "name": "catppuccin",
+      "ms": 480.9757520000003
+    },
+    {
+      "name": "catppuccin",
+      "ms": 482.3920470000003
+    },
+    {
+      "name": "ocean",
+      "ms": 473.5700319999996
+    },
+    {
+      "name": "no-syntax",
+      "ms": 159.441914
+    },
+    {
+      "name": "no-syntax",
+      "ms": 154.7102789999999
+    },
+    {
+      "name": "ocean",
+      "ms": 477.98419100000046
+    },
+    {
+      "name": "catppuccin",
+      "ms": 490.9126030000007
+    },
+    {
+      "name": "catppuccin",
+      "ms": 489.3311279999998
+    },
+    {
+      "name": "ocean",
+      "ms": 477.76705500000025
+    },
+    {
+      "name": "no-syntax",
+      "ms": 155.74819500000012
+    }
+  ],
+  "summary": [
+    {
+      "name": "catppuccin",
+      "median_ms": 489.3311279999998,
+      "max_ms": 496.69141300000047,
+      "samples": 9
+    },
+    {
+      "name": "ocean",
+      "median_ms": 477.98419100000046,
+      "max_ms": 490.2573470000002,
+      "samples": 9
+    },
+    {
+      "name": "no-syntax",
+      "median_ms": 155.74819500000012,
+      "max_ms": 167.08184900000015,
+      "samples": 9
+    }
+  ],
+  "profile": {
+    "command": "perf record -F 999 --call-graph dwarf -- delta --paging=never --width=80 --hyperlinks --hyperlinks-file-link-format=lazygit-edit://{path}:{line}",
+    "largest_leaf_costs": [
+      "100.00%  [.] <alloc::vec::Vec<&str>>::extend_desugared::<core::str::iter::SplitWhitespace>",
+      "10.48%  [.] match_at",
+      "9.95%  [.] <syntect::parsing::parser::ParseState>::parse_line",
+      "6.45%  [.] forward_search",
+      "4.78%  [.] <delta::align::Alignment>::new",
+      "3.73%  [.] <str>::to_lowercase",
+      "3.11%  [.] search_in_range",
+      "2.98%  [.] realloc",
+      "2.08%  [.] cfree",
+      "1.88%  [.] <syntect::parsing::syntax_definition::MatchIter as core::iter::traits::iterator::Iterator>::next",
+      "1.66%  [.] <alloc::string::String as core::fmt::Write>::write_str",
+      "1.46%  [.] onig_region_copy",
+      "1.45%  [.] <delta::ansi::iterator::AnsiElementIterator as core::iter::traits::iterator::Iterator>::next",
+      "1.44%  [.] 0x00000000000a62e4",
+      "1.43%  [.] <hashbrown::map::HashMap<*const syntect::parsing::syntax_definition::MatchPattern, core::option::Option<syntect::parsing::regex::Region>, core::hash::BuildHasherDefault<fnv::FnvHasher>>>::insert",
+      "1.43%  [.] <core::hash::sip::Hasher<core::hash::sip::Sip13Rounds> as core::hash::Hasher>::write",
+      "1.43%  [.] <delta::paint::Painter>::paint_line",
+      "1.25%  [.] malloc",
+      "1.23%  [.] 0x0000000000176687",
+      "1.04%  [.] core::unicode::unicode_data::conversions::to_lower",
+      "1.03%  [.] core::fmt::write",
+      "1.03%  [.] <u8 as core::fmt::Display>::fmt",
+      "0.85%  [.] <delta::highlight::CachedHighlighter>::current_style",
+      "0.83%  [.] 0x00000000000a62fd"
+    ],
+    "theme_related_leaf_costs": [
+      "0.85%  [.] <delta::highlight::CachedHighlighter>::current_style",
+      "0.62%  [.] <syntect::parsing::scope::ScopeStack>::apply",
+      "0.62%  [.] <syntect::highlighting::highlighter::Highlighter>::update_single_cache_for_push"
+    ]
+  }
+}
