@@ -50,6 +50,10 @@ jobs:
           tool: cross
       - name: Unit tests
         shell: bash
+        env:
+          # Avoid spawning cargo metadata from cross-compiled snapshot tests.
+          INSTA_WORKSPACE_ROOT: .
+          CROSS_BUILD_ENV_PASSTHROUGH: INSTA_WORKSPACE_ROOT
         run: |
           if [[ "${{ matrix.job.use-cross }}" == "true" ]]; then
             cross test --target ${{ matrix.job.target }} --verbose -- --nocapture
