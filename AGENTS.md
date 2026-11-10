@@ -19,9 +19,11 @@ Keep local `main` tracking `upstream/main` and `experiments` tracking
 `origin/experiments`. Push fork work to `origin`. Put fork-specific commits on
 `experiments`, never on `main`.
 
-When resolving issues after merging main or other upstream changes, keep
-upstream's intent and preserve our performance improvements wherever they
-remain correct. Correctness takes priority when the two conflict.
+## Local changes and upstream integration
+
+Before local code changes or upstream integration, read the
+[regression-validation profile](etc/performance/README.md).
+Preserve upstream intent and valid fork improvements; correctness comes first.
 
 ## Common commands
 
@@ -35,21 +37,8 @@ Prefer `just` over `make`: just is available on all the user's machines.
 - `just lint`: run `cargo clippy --all-targets`.
 - `just check`: check formatting, run Clippy and the Rust tests, and build release.
 
-For architecture, read `ARCHITECTURE.md`. Before changing performance,
-lazygit integration, or editor rendering, read
-`etc/performance/fork-performance.md`. It records the chezmoi customizations,
-OSC 1717 contract, benchmark method, and existing validation limits.
-
-Use optimized builds for performance measurements. Preserve exact emitted
-bytes, including OSC 1717 row metadata and OSC 8 editor hyperlinks, when a
-change is intended to preserve rendering behavior. Use
-`etc/performance/compare.mjs` for paired measurements.
-
-Existing shell end-to-end tests live under `tests/`. The full-history raw-output
-test has a recorded baseline failure, and Clippy has recorded baseline warnings;
-see the performance analysis. Verify existing failures against the baseline
-and report them separately from new failures. Isolate pager-history test paths
-from personal history files.
+Read `ARCHITECTURE.md` for design and the validation profile for caller
+contracts, measurements, and baseline failures.
 
 ## When to commit
 

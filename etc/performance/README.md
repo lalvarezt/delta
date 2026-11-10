@@ -1,54 +1,63 @@
-# Performance measurements
+# Validate delta changes
 
-Read [the fork analysis](fork-performance.md) for measured results and priorities
-for lazygit and Neovim.
+For local edits and upstream integration, use the shared protocol at
+`~/.agents/skills/merge-upstream/references/regression-validation.md`.
+Read the [fork analysis](fork-performance.md) for configured callers,
+customizations, baseline failures, and measurement limits.
 
-## Compare two builds
+## Caller coverage
 
-1. Build and save the original executable before changing the source:
+- Rendering: tiny and ordinary diffs, long lines, Unicode, tabs, and unpaired
+  changes; unified and side-by-side modes, syntax paths, pairing, and
+  tie-breaking.
+- Reuse: first and repeated work; syntax, scope-stack, theme, width, and color
+  changes under isolated and configured settings.
+- lazygit: colored input, wrapper behavior, OSC 1717 row identities, OSC 8
+  links, statistics, and consuming actions; distinguish combined diffs.
+- Streaming: startup, delayed first output, completion, cancellation,
+  errors, and memory across the configured producer, wrapper, and renderer.
 
-	```sh
-	cargo build --release
-	cp target/release/delta /tmp/delta-before
-	```
+Preserve exact bytes for unchanged rendering. Assert intentional output
+changes and add missing caller probes.
 
-2. Apply the change and build the candidate:
+## Checks and paired builds
 
-	```sh
-	cargo build --release
-	```
+Run `just check` and relevant shell tests under `tests/`. Isolate pager-history
+files. Verify recorded baseline failures on the current baseline.
 
-3. Compare the executables:
+Save each local baseline release build before editing; retain the task-start
+build and use separate output paths for successive comparisons:
 
-	```sh
-	node etc/performance/compare.mjs \
-	  --before /tmp/delta-before \
-	  --after target/release/delta \
-	  --output /tmp/delta-comparison.json
-	```
+```sh
+just build
+cp target/release/delta /tmp/delta-before
+# Make the change, then:
+just build
+node etc/performance/compare.mjs \
+  --before /tmp/delta-before --after target/release/delta \
+  --output /tmp/delta-comparison.json
+```
 
-The runner requires Node.js 20 or later. It checks exact output equality before
-timing each case, warms both binaries, and alternates their order across 15
-measured runs. The JSON records every sample, median absolute deviations,
-fixture hashes, binary hashes, and source revisions. A mismatch or command
-failure stops the run.
+The Node.js 20+ runner checks exact output, warms both binaries, and alternates
+15 measured runs. JSON retains samples, deviations, hashes, and revisions;
+mismatches or failures stop the run. Record additional working-tree changes
+and controls.
 
-By default, delta runs with `--no-gitconfig`, a dark background, true color,
-100 columns, and no pager. Bat's syntax and theme cache still comes from your
-environment. Add `--gitconfig` to measure your Git configuration. Add
-`--lazygit /path/to/lazygit` to include Go changes from that checkout.
-For lazygit's colored input and editor links, add `--colored --hyperlinks`.
+## Configuration and scope
 
-To repeat a small case with more samples, add `--fixture tiny`,
-`--mode side-by-side`, and `--runs 50`. Repeat `--fixture` or `--mode` to select
-several cases.
+Defaults are `--no-gitconfig`, dark true color, 100 columns, and no pager;
+Bat caches remain environmental. Relevant options:
 
-These measurements cover process startup and complete rendering to a discarded
-output stream. They do not measure editor redraw, terminal parsing, a live Git
-producer, or time to first output. Keep other builds and tests idle during timing.
+- `--gitconfig`: actual Git configuration.
+- `--lazygit /path/to/lazygit --colored --hyperlinks`: lazygit input and links.
+- `--fixture tiny --mode side-by-side --runs 50`: recheck a short case.
+
+Record wrapper and installed-tool identities for integrated tests. Keep builds
+and tests idle during timing. The runner measures startup and complete output
+to a discarded stream, excluding live producers, first output, terminal parsing,
+and editor redraw. Probe those separately; measure moved setup and refresh work
+and memory separately too.
 
 ## Historical throughput
-
-The older history benchmark and chronologer visualization remain available:
 
 <img src="./visualization.svg">
