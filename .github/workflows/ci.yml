@@ -1,11 +1,6 @@
 name: CI
 
 on:
-  push:
-    branches:
-      - main
-      - experiments
-  pull_request:
   workflow_call:
 
 jobs:
