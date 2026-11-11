@@ -27,8 +27,9 @@ if (!Number.isInteger(runs) || runs < 3) throw new Error('--runs must be an inte
 const root = fileURLToPath(new URL('../..', import.meta.url));
 const gitColor = values.colored ? '--color=always' : '--color=never';
 const binaries = [values.before, values.after].map(p => path.resolve(p));
-const env = { ...process.env, DELTA_FEATURES: '', DELTA_PAGER: 'cat' };
+const env = { ...process.env, DELTA_PAGER: 'cat' };
 if (!values.gitconfig) {
+  env.DELTA_FEATURES = '';
   Object.assign(env, { GIT_CONFIG_NOSYSTEM: '1', GIT_CONFIG_GLOBAL: os.devNull, GIT_CONFIG_COUNT: '0' });
   delete env.BAT_THEME;
 }

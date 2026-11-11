@@ -1,5 +1,13 @@
 # Delta performance in lazygit and Neovim
 
+The comparison runner's `--gitconfig` mode previously cleared `DELTA_FEATURES`,
+which disables feature sets selected by Git configuration. The runner now
+preserves that environment in configured mode. Historical results from that
+mode do not establish performance with those feature sets active. Separately
+collected wrapper and UI measurements did not use that runner path. The
+upstream merge validation on 2026-11-11 freezes the configuration and checks
+that the Catppuccin feature and theme are active before timing.
+
 The best immediate improvements preserve the existing rendering. The larger
 opportunity is to avoid starting and configuring a renderer for every selection,
 then avoid rendering work the user never sees. Syntax highlighting remains the
