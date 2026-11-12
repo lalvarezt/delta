@@ -1,5 +1,9 @@
 # Keeping the delta fork maintainable
 
+The later [integration acceptance](upstream-integration-2026-11-12.md) supersedes
+this assessment's description of the candidate as unlanded. The maintenance
+recommendations below remain recommendations.
+
 The fork remains justified by the measured improvements to the personal
 lazygit workflow. Keeping it current at any cost is harder to justify. My
 recommendation is to retain the fork with a narrow scope and accept deliberate

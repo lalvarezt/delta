@@ -1,0 +1,106 @@
+{
+  "schema": 1,
+  "decision": {
+    "accepted": true,
+    "scope": "Reviewed upstream revision and disclosed measured costs; no blanket exception for future regressions",
+    "userInstruction": "ok this is reasonable, I accept, just try to improve where needed. also create a note in lazygit repo witht he changes you suggest so things are faster. do not commit there"
+  },
+  "pins": {
+    "taskStart": "96cee58f4715279586424fd471974a80ae17d4c6",
+    "upstream": "876a1624fed217d32c35007cdfbe1bf7a7ecb6c8",
+    "main": "876a1624fed217d32c35007cdfbe1bf7a7ecb6c8",
+    "mergeBase": "ae44d3f007a4bef28c734737189eced85ee02f36",
+    "status": "",
+    "lazygitHead": "eb0320973ffe795970ad95c047ad147a15c53e81",
+    "lazygitStatus": "",
+    "baselineSha256": "aeb791234ffc2039aea6ddcc0b6e93ac9a8339dc51d09b1cac60fd1099d968a1"
+  },
+  "identity": {
+    "before": "aeb791234ffc2039aea6ddcc0b6e93ac9a8339dc51d09b1cac60fd1099d968a1",
+    "after": "3eece00bfeadcd76ebf6fe9c0ded2b6f9c5beece1c08bc96484552c1c2e88417",
+    "previousBefore": "aeb791234ffc2039aea6ddcc0b6e93ac9a8339dc51d09b1cac60fd1099d968a1",
+    "previousAfter": "3eece00bfeadcd76ebf6fe9c0ded2b6f9c5beece1c08bc96484552c1c2e88417",
+    "runtimeDiffFromMeasuredCandidate": 0,
+    "warningLines": [
+      "warning: this expression creates a reference which is immediately dereferenced by the compiler",
+      "warning: this expression creates a reference which is immediately dereferenced by the compiler",
+      "warning: this expression creates a reference which is immediately dereferenced by the compiler",
+      "warning: this expression creates a reference which is immediately dereferenced by the compiler",
+      "warning: `git-delta` (bin \"delta\" test) generated 4 warnings (run `cargo clippy --fix --bin \"delta\" -p git-delta --tests -- ` to apply 4 suggestions)"
+    ]
+  },
+  "freshChecks": [
+    {
+      "recipe": "format",
+      "status": 0,
+      "tests": [],
+      "warnings": 0
+    },
+    {
+      "recipe": "check",
+      "status": 0,
+      "tests": [
+        "test result: ok. 516 passed; 0 failed; 8 ignored; 0 measured; 0 filtered out; finished in 0.47s"
+      ],
+      "warnings": 5
+    }
+  ],
+  "callerContracts": {
+    "passed": 24,
+    "checks": [
+      "mixed metadata width=40 numbers=true native=false",
+      "mixed metadata width=40 numbers=true native=true",
+      "mixed metadata width=40 numbers=false native=false",
+      "mixed metadata width=40 numbers=false native=true",
+      "mixed metadata width=41 numbers=true native=false",
+      "mixed metadata width=41 numbers=true native=true",
+      "mixed metadata width=41 numbers=false native=false",
+      "mixed metadata width=41 numbers=false native=true",
+      "mixed metadata width=100 numbers=true native=false",
+      "mixed metadata width=100 numbers=true native=true",
+      "mixed metadata width=100 numbers=false native=false",
+      "mixed metadata width=100 numbers=false native=true",
+      "deleted syntax unified",
+      "deleted syntax --side-by-side",
+      "deleted syntax --side-by-side=hunk",
+      "deleted syntax --color-only",
+      "hunk mode minimum width falls back byte-for-byte",
+      "color-only preserves the interactive patch input contract",
+      "CLI side-by-side keeps custom feature formats",
+      "hunk mode keeps separate unified and panel formats",
+      "history has only the intended minus syntax difference rust-history ",
+      "history has only the intended minus syntax difference rust-history --side-by-side",
+      "history has only the intended minus syntax difference go-history ",
+      "history has only the intended minus syntax difference go-history --side-by-side"
+    ]
+  },
+  "reusedEvidence": {
+    "path": "upstream-benchmarks-2026-11-11.json",
+    "justification": "Both executable hashes and runtime source match the previously measured pair",
+    "newTimedSamples": false
+  },
+  "lazygitNote": {
+    "path": "/home/lalvarezt/git-repos/lazygit/docs-master/dev/Delta-ansi-ingestion-follow-up.md",
+    "sha256": "34b054d0abb8cf809579e7346a51b19a56315fbd25d70fd1b85b11a80fc6f6db",
+    "committed": false,
+    "sourceChanged": false
+  },
+  "improvements": {
+    "retained": [
+      "compact alignment storage",
+      "direct range composition",
+      "scope-style cache",
+      "native wrapper adapter",
+      "dependency repairs",
+      "release optimization",
+      "benchmark runner feature activation fix"
+    ],
+    "experimentalPatchesAdopted": false,
+    "followup": "Unicode boundary recognition in lazygit SGR parsing; validate before adoption"
+  },
+  "gaps": [
+    "No fresh Windows checks",
+    "No fresh physical terminal redraw or interactive editor actions",
+    "Existing raw-history baseline failure and sampled-memory limitations retained"
+  ]
+}

@@ -250,7 +250,7 @@ impl GitConfigGet for cli::SideBySide {
         if entry.has_value() {
             entry.value().ok()?.parse().ok()
         } else {
-            Some(Self::On)
+            Some(Self::On(cli::SideBySideScope::All))
         }
     }
 }

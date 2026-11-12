@@ -1,5 +1,9 @@
 # Upstream performance gate, 2026-11-11
 
+On 2026-11-12, the user accepted the measured costs after reviewing their causes.
+The [subsequent integration report](upstream-integration-2026-11-12.md) records
+that decision. The strict-gate result and measurements below remain historical.
+
 The upstream merge fails the required performance gate and remains unlanded.
 No correctness-cost exception applies. The tested changes do not preserve
 before-and-after performance for every affected caller.
