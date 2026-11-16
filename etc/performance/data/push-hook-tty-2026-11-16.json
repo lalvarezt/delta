@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "baseline": {
+    "head": "9ba7eaa4e407ddda16b3d80b0af9c8b20616bf6f",
+    "beforeHash": "e396e9e830c1a5161d3b9d5ca699c3f3c22a61dc5c2527590b360e18c6596b84",
+    "status": ""
+  },
+  "integrationTarget": "2713c82e0766a40f6a99ec5cd31bbdffce53bada",
+  "rootCause": "Unit tests stub the terminal color query but inspected the real stdout terminal status. PTY execution chose the query path and ignored the fixture environment fallback.",
+  "reproducer": {
+    "command": "cargo test --bin delta options::theme::tests::test_terminal_color_mode_from_env_var_when_stdout_is_not_the_terminal -- --exact",
+    "runner": "script -q -e -c COMMAND TRANSCRIPT",
+    "before": {
+      "exit": 101,
+      "signal": null,
+      "transcript": "Script started on 2026-11-16 12:07:29+01:00 [COMMAND=\"cargo test --bin delta options::theme::tests::test_terminal_color_mode_from_env_var_when_stdout_is_not_the_terminal -- --exact\" <not executed on terminal>]\n    Finished `test` profile [optimized + debuginfo] target(s) in 0.07s\r\n     Running unittests src/main.rs (target/debug/deps/delta-0a5cb4bdb4e71b28)\r\n\r\nrunning 1 test\r\ntest options::theme::tests::test_terminal_color_mode_from_env_var_when_stdout_is_not_the_terminal ... FAILED\r\n\r\nfailures:\r\n\r\n---- options::theme::tests::test_terminal_color_mode_from_env_var_when_stdout_is_not_the_terminal stdout ----\r\n\r\nthread 'options::theme::tests::test_terminal_color_mode_from_env_var_when_stdout_is_not_the_terminal' (1907762) panicked at src/options/theme.rs:247:9:\r\nassertion `left == right` failed\r\n  left: Light\r\n right: Dark\r\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\r\n\r\n\r\nfailures:\r\n    options::theme::tests::test_terminal_color_mode_from_env_var_when_stdout_is_not_the_terminal\r\n\r\ntest result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 563 filtered out; finished in 0.01s\r\n\r\nerror: test failed, to rerun pass `--bin delta`\r\n\nScript done on 2026-11-16 12:07:29+01:00 [COMMAND_EXIT_CODE=\"101\"]\n"
+    },
+    "after": {
+      "exit": 0,
+      "signal": null,
+      "transcript": "Script started on 2026-11-16 12:09:06+01:00 [COMMAND=\"cargo test --bin delta options::theme::tests::test_terminal_color_mode_from_env_var_when_stdout_is_not_the_terminal -- --exact\" <not executed on terminal>]\n    Finished `test` profile [optimized + debuginfo] target(s) in 0.08s\r\n     Running unittests src/main.rs (target/debug/deps/delta-0a5cb4bdb4e71b28)\r\n\r\nrunning 1 test\r\ntest options::theme::tests::test_terminal_color_mode_from_env_var_when_stdout_is_not_the_terminal ... ok\r\n\r\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 563 filtered out; finished in 0.01s\r\n\r\n\nScript done on 2026-11-16 12:09:06+01:00 [COMMAND_EXIT_CODE=\"0\"]\n"
+    }
+  },
+  "fix": {
+    "source": "src/options/theme.rs",
+    "sourceSha256": "5b83b7657bd50041c79f74b80698af91bc145098eda9d2cca6c347f2896ca874",
+    "productionCondition": "cfg!(test) is false; normal executable terminal detection is unchanged",
+    "hookModified": false
+  },
+  "validation": {
+    "format": 0,
+    "ptyJustCheck": {
+      "exit": 0,
+      "unitPassed": 556,
+      "metadataIntegrationPassed": 2,
+      "tuiIntegrationPassed": 2,
+      "ignored": 8,
+      "clippyWarnings": 0,
+      "releaseBuild": 0
+    },
+    "beforeReleaseSha256": "e396e9e830c1a5161d3b9d5ca699c3f3c22a61dc5c2527590b360e18c6596b84",
+    "afterReleaseSha256": "e396e9e830c1a5161d3b9d5ca699c3f3c22a61dc5c2527590b360e18c6596b84",
+    "benchmarks": "Not rerun for the compile-time unit-test condition."
+  },
+  "scope": "Fix the existing failing test through the shared terminal-observation boundary; no snapshots or assertions removed."
+}

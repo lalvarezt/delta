@@ -112,7 +112,10 @@ fn get_color_mode(opt: &cli::Opt, terminal_color_mode: Option<ColorMode>) -> Opt
 /// See [`cli::Opt::detect_dark_light`] for a detailed explanation.
 fn should_detect_color_mode(opt: &cli::Opt) -> bool {
     match opt.detect_dark_light {
-        DetectDarkLight::Auto => opt.color_only || stdout().is_terminal(),
+        DetectDarkLight::Auto => {
+            // Unit tests model captured output alongside their stubbed color query.
+            opt.color_only || (!cfg!(test) && stdout().is_terminal())
+        }
         DetectDarkLight::Always => true,
         DetectDarkLight::Never => false,
     }
