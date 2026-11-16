@@ -38,8 +38,9 @@ clap = { version = "4.6.7", features = [
 ] }
 console = "0.15.11"
 ctrlc = "3.5.2"
+delta-gitu = { version = "0.1.18", default-features = false, optional = true }
 dirs = "6.0.0"
-git2 = { version = "0.21.0", default-features = false, features = [] }
+git2 = { version = "0.20.0", default-features = false, features = [] }
 grep-cli = "0.1.12"
 itertools = "0.10.5"
 lazy_static = "1.5.1"
@@ -49,6 +50,8 @@ regex = "1.13.1"
 serde_json = "1.0.154"
 serde = { version = "1.0.229", features = ["derive"] }
 shell-words = "1.1.1"
+log = { version = "0.4", optional = true }
+simple-logging = { version = "2.0.2", optional = true }
 smol_str = "0.1.24"
 syntect = "5.3.0"
 # sysinfo: no default features to disable the use of threads
@@ -59,6 +62,11 @@ unicode-segmentation = "1.13.3"
 # and re-gain \n in various stages, which complicates upgrading.
 unicode-width = ">=0.1.14, <0.2.0"
 xdg = "2.5.2"
+
+[features]
+default = ["gitu"]
+# `delta --tui`: an interactive git client and pager, with delta as its renderer.
+gitu = ["dep:delta-gitu", "dep:log", "dep:simple-logging"]
 
 [lints.rust]
 unexpected_cfgs = { level = "warn", check-cfg = ['cfg(tarpaulin_include)'] }
