@@ -41,6 +41,11 @@ fn pick_version(advertised: &str) -> Option<u32> {
 /// in `OSC1717` (e.g. "V1" or "V1,V2"), or `None` when no host is asking (the
 /// variable is unset) so delta stays silent.
 pub fn negotiated_version() -> Option<u32> {
+    // Unit tests inject metadata explicitly; their host may be displaying test
+    // output rather than asking delta to render a diff for it.
+    if cfg!(test) {
+        return None;
+    }
     static VERSION: OnceLock<Option<u32>> = OnceLock::new();
     *VERSION.get_or_init(|| pick_version(&std::env::var("OSC1717").ok()?))
 }

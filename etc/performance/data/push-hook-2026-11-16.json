@@ -1,0 +1,178 @@
+{
+  "schema": 1,
+  "taskStart": "2713c82e0766a40f6a99ec5cd31bbdffce53bada",
+  "guardCommit": "199eaf08553da9551547731283f20a769763044f",
+  "rootCause": "The unit-test binary cached inherited OSC1717=V1 as real host negotiation; ordinary snapshots received OSC records.",
+  "origin": {
+    "commit": "42a3e1a",
+    "predatesForkBaseline": "3c2269c"
+  },
+  "reproducer": {
+    "command": "OSC1717=V1 cargo test --bin delta",
+    "before": {
+      "exit": 101,
+      "signal": null
+    },
+    "beforeSummary": "test result: FAILED. 526 passed; 30 failed; 8 ignored; 0 measured; 0 filtered out; finished in 1.27s",
+    "failures": [
+      "handlers::commit_meta::tests::test_no_commit_record_when_no_host_negotiated",
+      "handlers::hunk::tests::word_diff::test_color_words",
+      "handlers::hunk::tests::word_diff::test_word_diff",
+      "handlers::diff_header::tests::test_diff_header_ambiguous_3x_minus_extra_and_concatenated",
+      "handlers::diff_header::tests::test_diff_header_ambiguous_3x_minus_concatenated",
+      "handlers::diff_header::tests::test_diff_header_ambiguous_3x_minus",
+      "subcommands::diff::main_tests::test_diff_real_files::case_3::args_1_vec___",
+      "subcommands::diff::main_tests::test_diff_real_files::case_3::args_3_vec______u___",
+      "subcommands::diff::main_tests::test_diff_real_files::case_3::args_2_vec____________",
+      "subcommands::diff::main_tests::test_diff_real_files::case_3::args_4_vec______U99___",
+      "subcommands::diff::main_tests::test_diff_real_files::case_3::args_5_vec______U0___",
+      "subcommands::external::test::subcommand_git_cat_file",
+      "tests::test_example_diffs::tests::test_added_empty_line_highlight",
+      "tests::test_example_diffs::tests::test_color_only_diff_filter_zero_style_bg",
+      "tests::test_example_diffs::tests::test_commit_style_raw_no_decoration",
+      "tests::test_example_diffs::tests::test_commit_style_colored_input_color_is_stripped_under_normal",
+      "tests::test_example_diffs::tests::test_commit_style_box_raw",
+      "tests::test_example_diffs::tests::test_file_style_omit",
+      "tests::test_example_diffs::tests::test_full_filename_used_to_detect_language",
+      "tests::test_example_diffs::tests::test_file_style_box_raw",
+      "tests::test_example_diffs::tests::test_file_style_colored_input_color_is_stripped_under_normal",
+      "tests::test_example_diffs::tests::test_hunk_header_style_box_with_syntax_highlighting",
+      "tests::test_example_diffs::tests::test_hunk_header_style_box_raw",
+      "tests::test_example_diffs::tests::test_removed_empty_line_highlight",
+      "tests::test_example_diffs::tests::test_hunk_header_style_colored_input_color_is_stripped_under_normal",
+      "tests::test_example_diffs::tests::test_hunk_header_style_raw_no_decoration_with_line_numbers",
+      "tests::test_example_diffs::tests::test_unrecognized_file_type_no_syntax_theme",
+      "tests::test_example_diffs::tests::test_hunk_header_style_raw_no_decoration",
+      "tests::test_switch_and_style_features::a_builtin_feature_named_in_a_features_list_is_in_effect",
+      "tests::test_switch_and_style_features::every_builtin_feature_gives_the_same_output_however_it_is_turned_on"
+    ],
+    "afterSummary": "test result: ok. 556 passed; 0 failed; 8 ignored; 0 measured; 0 filtered out; finished in 1.35s"
+  },
+  "controlRuns": {
+    "directHook": {
+      "exit": 0,
+      "signal": null
+    },
+    "ordinaryDryRun": {
+      "exit": 0,
+      "signal": null
+    }
+  },
+  "fix": {
+    "scope": "Unit-test negotiation only; production uses the inherited host advertisement and OnceLock as before.",
+    "metadataSourceSha256": "c649ee94389a3c97501beb1e60d17bf182fd3a824f4c98fed22626f3df382961",
+    "testSourceSha256": "14e69530e54872aad97761fe551fe4149b88020bca5b8de6254dfb854d548bb5",
+    "patchSha256": "d6a882c11b276a3394c236282884470b545fa5af6a2a40fe2168c2d5829d14c9"
+  },
+  "validation": {
+    "format": 0,
+    "checks": {
+      "format": 0,
+      "check": 0,
+      "beforeHash": "581c1ad719c6eae28435fc2a4af65e789a185e500885482ad48a72d9f8bbfd85",
+      "afterHash": "e396e9e830c1a5161d3b9d5ca699c3f3c22a61dc5c2527590b360e18c6596b84"
+    },
+    "command": "OSC1717=V1 just check",
+    "tests": [
+      "test result: ok. 556 passed; 0 failed; 8 ignored; 0 measured; 0 filtered out; finished in 1.26s",
+      "test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s",
+      "test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s"
+    ],
+    "warnings": [],
+    "realHookDryRun": {
+      "command": "OSC1717=V1 git push --dry-run origin experiments",
+      "exit": 0,
+      "signal": null,
+      "remoteRefsUpdated": false
+    },
+    "productionParity": {
+      "before": "581c1ad719c6eae28435fc2a4af65e789a185e500885482ad48a72d9f8bbfd85",
+      "after": "e396e9e830c1a5161d3b9d5ca699c3f3c22a61dc5c2527590b360e18c6596b84",
+      "cases": 66,
+      "checks": [
+        "isolated/empty/unified",
+        "isolated/empty/side-by-side",
+        "isolated/empty/no-syntax",
+        "isolated/tiny/unified",
+        "isolated/tiny/side-by-side",
+        "isolated/tiny/no-syntax",
+        "isolated/unicode/unified",
+        "isolated/unicode/side-by-side",
+        "isolated/unicode/no-syntax",
+        "isolated/long-lines/unified",
+        "isolated/long-lines/side-by-side",
+        "isolated/long-lines/no-syntax",
+        "isolated/unpaired/unified",
+        "isolated/unpaired/side-by-side",
+        "isolated/unpaired/no-syntax",
+        "isolated/rust-history/unified",
+        "isolated/rust-history/side-by-side",
+        "isolated/rust-history/no-syntax",
+        "isolated/go-small/unified",
+        "isolated/go-small/side-by-side",
+        "isolated/go-small/no-syntax",
+        "isolated/go-history/unified",
+        "isolated/go-history/side-by-side",
+        "isolated/go-history/no-syntax",
+        "configured/empty/unified",
+        "configured/empty/side-by-side",
+        "configured/empty/no-syntax",
+        "configured/tiny/unified",
+        "configured/tiny/side-by-side",
+        "configured/tiny/no-syntax",
+        "configured/unicode/unified",
+        "configured/unicode/side-by-side",
+        "configured/unicode/no-syntax",
+        "configured/long-lines/unified",
+        "configured/long-lines/side-by-side",
+        "configured/long-lines/no-syntax",
+        "configured/unpaired/unified",
+        "configured/unpaired/side-by-side",
+        "configured/unpaired/no-syntax",
+        "configured/rust-history/unified",
+        "configured/rust-history/side-by-side",
+        "configured/rust-history/no-syntax",
+        "configured/go-small/unified",
+        "configured/go-small/side-by-side",
+        "configured/go-small/no-syntax",
+        "configured/go-history/unified",
+        "configured/go-history/side-by-side",
+        "configured/go-history/no-syntax",
+        "native/empty/unified",
+        "native/empty/side-by-side",
+        "native/unicode/unified",
+        "native/unicode/side-by-side",
+        "native/go-30/unified",
+        "native/go-30/side-by-side",
+        "native/go-1000/unified",
+        "native/go-1000/side-by-side",
+        "native/go-12000/unified",
+        "native/go-12000/side-by-side",
+        "native/go-history-colored/unified",
+        "native/go-history-colored/side-by-side",
+        "hunk/tiny/hunk",
+        "hunk/unicode/hunk",
+        "hunk/mixed-layout/hunk",
+        "hunk/large-context/hunk",
+        "hunk/go-12000/hunk",
+        "hunk/deleted-rust/hunk"
+      ]
+    }
+  },
+  "hook": {
+    "path": ".git/hooks/pre-push",
+    "source": "#!/bin/sh\nset -eu\n\ncargo audit\nexec just check\n",
+    "sha256": "baa78a5260aaa407119eb4ffa5992a8ad1bc2b778056cc5e45f7be8282145db6",
+    "modified": false
+  },
+  "limits": [
+    "Linux ARM executable tests retain the existing cross-emulation exclusion.",
+    "The known raw-history baseline failure and accepted git2 advisories remain unchanged.",
+    "No runtime benchmark rerun for the compile-time unit-test condition."
+  ],
+  "rawArchive": {
+    "path": "/home/lalvarezt/git-repos/delta/.git/performance/delta-push-hook-2026-11-16.tar.gz",
+    "bytes": 4634346,
+    "sha256": "87952ee248445a25bba1f5a96077fb8d99027207ef59a43a3d57ace6523f15cd"
+  }
+}
